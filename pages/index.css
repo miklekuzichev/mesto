@@ -1,0 +1,186 @@
+@import url(../vendor/normalize.css);
+@import url(../vendor/fonts/inter.css);
+
+
+.border {
+    border: 2px solid rgb(235, 22, 22);
+}
+
+/* CSS стили для page */
+
+.page {
+    min-width: 320px;
+    min-height: 100vh;
+    margin: 0 auto;
+    background-color:#000000;
+    font-family: "Inter", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+    -moz-osx-font-smoothing: grayscale;
+    -moz-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+  }
+  
+
+.header {
+    margin: 0;
+    margin: 0 200px;
+    min-width: 880px;
+    min-height: 74px;
+    border-bottom: 1px solid #545454;
+    ;
+  }
+
+.header__logo {
+    margin: 0;
+    min-width: 142px;
+    min-height: 33px;
+
+  }
+
+.profile{
+    margin: 0;
+    margin: 40px 200px 0 200px;
+    min-width: 880px;
+    min-height: 120px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+.profile__card-user{
+    margin: 0;
+    min-width: 508px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.profile__avatar{
+    max-width: 120px;
+    height: 100%;
+    border-radius: 50%;
+    box-shadow: 0;
+}
+
+.profile__info{
+    display: grid;
+    grid-template-columns: 294px 24px;
+    grid-template-rows: auto;
+    gap: 16px 18px;
+    align-items: center;
+}
+
+.profile__title{
+
+    margin: 0;
+    text-align: center;
+    font-style: normal;
+    font-size: 42px;
+    font-weight: 500;
+    line-height: 48px;
+    color: white;
+  }
+
+  .profile__subtitle{
+
+
+    margin: 0;
+    text-align: left;
+    font-style: normal;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 22px;
+    color: white;
+  }
+
+.profile__edit-button{
+    margin: 0;
+    padding: 0;
+    min-width: 24px;
+    min-height: 24px;
+    border: 1px solid #ffffff;
+    box-sizing: border-box;
+    background-color:#000000;
+    background: url(../images/edit-button.png) center no-repeat;
+}
+/*
+.profile__edit-img{
+    margin: 0;
+    min-width: 10px;
+    max-height: 10px;
+
+}
+*/
+
+
+.profile__add-button{
+    margin: 0;
+    padding: 0;
+    min-width: 150px;
+    min-height: 50px;
+    border: 2px solid #ffffff;
+    border-radius: 2px;
+    box-sizing: border-box;
+    background-color:#000000;
+    background: url(../images/add-button.png) center no-repeat;
+}
+
+
+
+.cards{
+    margin: 0;
+    margin: 40px auto 0 auto;
+    max-width: 880px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+    gap: 20px 17px;
+    box-sizing: border-box;
+    
+  }
+
+  .card{
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+
+  .card__image{
+    margin: 0;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    object-fit: cover;
+  }
+
+  .card__subcard{
+    margin: 0px;
+    padding-left: 21px;
+    padding-right: 15px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    min-height: 79px;
+    background-color:#ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .card__text{
+    margin: 0px;
+    font-size: 24px;
+    font-weight: 900;
+    line-height: 29px;
+    color: #000000;
+  }
+
+  .card__heart-button{
+    margin: 0;
+    padding: 0;
+    width: 22px;
+    height: 19px;
+    background: url(../images/heart.svg) center no-repeat;
+    border: #ffffff;
+  }
