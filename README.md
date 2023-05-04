@@ -2,7 +2,7 @@
 
 ## О проекте
 
-Одностраничный сайт с адаптивным дизайном и базовым использованием javascript. Сайт разработан с нуля по макету дизайнера в [Figma](https://www.figma.com/file/5S2WSbEFL6awjVWJ0NWL8Q/Sprint-3_-Russia-_-desktop-mobile?node-id=28503%3A0).
+Одностраничный сайт с адаптивным дизайном и базовым использованием javascript. Сайт разработан с нуля по макету дизайнера в [Figma](https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0-1&t=2Bgxcl2Ow6Crs8XN-0).
 
 ## Технологический стек
 
