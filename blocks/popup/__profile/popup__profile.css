@@ -1,0 +1,27 @@
+/* CSS стили для popup__profile */
+
+.popup__profile{
+    width: 358px;
+    margin: 0;
+    margin-top: 30px;
+    margin-left: 36px;
+    padding: 0;
+    padding-bottom: 9px;
+    border: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    color: #000000;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: start;
+}
+
+@media screen and (max-width: 780px) {
+    .popup__profile{
+        width: 238px;
+        margin-top: 30px;
+        margin-left: 22px;
+        padding-bottom: 9px;
+    }
+}

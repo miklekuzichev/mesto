@@ -1,0 +1,10 @@
+/* CSS стили для footer */
+
+.footer {
+  margin: 0 auto;
+  background-color:#000000;
+  display: flex;
+  justify-content: start;
+}
+
+

@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Адаптивный сайт о путешествии по России. 3 спринт на Яндекс Практикуме">
-    <meta name="keywords" content="html, css, grid">
+    <meta name="description" content="Адаптивный сайт Mesto: базовая функциональность. 4 спринт на Яндекс Практикуме">
+    <meta name="keywords" content="html, css, javascript, js">
     <link rel="stylesheet" href="./pages/index.css">
     <title>
         Mesto Russia
@@ -20,7 +20,6 @@
             <section class="profile">
                 <div class="profile__card-user">
                     <img src="./images/jak-if-kusto.png" alt="Аватар пользователя" class="profile__avatar">
-                    
                     <div class="profile__info">
                         <h1 class="profile__title">Жак-Ив Кусто</h1>
                         <button type="button" class="profile__edit-button">
@@ -29,10 +28,8 @@
                         </p>>
                     </div>
                 </div>
-                
                 <button type="button" class="profile__add-button">
                 </button>
-                
             </section>
 
             <section class="cards" aria-label="Галерея картинок">
@@ -63,16 +60,6 @@
                         </button>
                     </div>
                 </div>
-
-                <div class="card">
-                    <img src="./images/karachaevsk.jpg" alt="Картинка Карачаевск" class="card__image">
-                    <div class="card__subcard">
-                        <p class="card__text">Карачаевск
-                        </p>
-                        <button class="card__heart-button">
-                        </button>
-                    </div>
-                </div>
                 <div class="card">
                     <img src="./images/elbrus.jpg" alt="Картинка Эльбрус" class="card__image">
                     <div class="card__subcard">
@@ -91,26 +78,37 @@
                         </button>
                     </div>
                 </div>
+                <div class="card">
+                    <img src="./images/karachaevsk.jpg" alt="Картинка Карачаевск" class="card__image">
+                    <div class="card__subcard">
+                        <p class="card__text">Карачаево-Черкессия
+                        </p>
+                        <button class="card__heart-button">
+                        </button>
+                    </div>
+                </div>
             </section>
 
         </main>
         <footer class="footer">
-            <p class="footer__author border">© 2023 Mesto Russia</p>
+            <p class="footer__author">© 2023 Mesto Russia</p>
         </footer>
 
         <div class="popup">
-            
-            <div class="popup__content">
+            <div class="popup__container">
                 <img class="popup__close" src="./images/Close-Icon.svg" alt="Иконка закрыть всплывающее окно">
                 <h2 class="popup__edit">Редактировать профиль</h2>
-                <div class="popup__name">Жак-Ив Кусто</div>
-                <div class="popup__profile">Исследователь океана</div>
-                <button class="popup__save">
-                    Сохранить
-                </button>
+                <form method="GET" action="#" class='popup__form'>
+                    <fieldset class="popup__fieldset">
+                        <input type='text' name="username" id="name" placeholder="Иван Иванов" minlength="2" maxlength="100" class="popup__name" required>
+                        <input type='text' name="username" id="name" placeholder="Фотограф" minlength="2" maxlength="150" class="popup__profile" required>
+                        <button type='submit' class="popup__save">
+                            Сохранить
+                        </button>
+                    </fieldset>
+                </form>
             </div>
         </div>
-
     <script src="./scripts/index.js"></script>
     </div>
 </body>

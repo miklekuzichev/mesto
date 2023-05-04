@@ -1,0 +1,41 @@
+/* CSS стили для header */
+
+.header {
+  margin: 0;
+  margin: 0 200px;
+  padding: 0;
+  padding-top: 45px;
+  padding-bottom: 36px;
+  min-width: 880px;
+  border-bottom: 1px solid rgba(84, 84, 84, .7);
+}
+
+@media screen and (max-width: 1279px) {
+  .header {
+      margin: 0 200px;
+      min-width: 320px;
+    }
+}
+
+@media screen and (max-width: 1070px) {
+  .header {
+      margin: 0 100px;
+      min-width: 320px;
+    }
+}
+
+@media screen and (max-width: 880px) {
+  .header {
+      margin: 0 50px;
+      padding-top: 28px;
+      padding-bottom: 27px;
+      min-width: 320px;
+  }
+}
+
+@media screen and (max-width: 780px) {
+  .header {
+      margin: 0;
+      min-width: 282px;
+    }
+}
