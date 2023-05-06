@@ -1,9 +1,9 @@
-/* CSS стили для popup__name */
+/* CSS стили для popup__input */
 
-.popup__name{
+.popup__input{
     width: 358px;
     margin: 0;
-    margin-top: 49px;
+    margin-top: 30px;
     margin-left: 36px;
     padding: 0;
     padding-bottom: 9px;
@@ -18,11 +18,8 @@
 }
 
 @media screen and (max-width: 780px) {
-    .popup__name{
+    .popup__input{
         width: 238px;
-        margin-top: 75px;
         margin-left: 22px;
-        padding-bottom: 9px;
     }
 }
-

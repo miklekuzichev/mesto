@@ -2,11 +2,17 @@
 
 .profile__card-user{
     margin: 0;
-    min-width: 485px;
+    min-width: 486px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
+
+@media screen and (max-width: 1279px) {
+    .profile__card-user{
+        min-width: 375px;
+    }
+}   
 
 @media screen and (max-width: 780px) {
     .profile__card-user{

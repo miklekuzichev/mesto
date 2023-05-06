@@ -5,7 +5,10 @@
     top: -40px;
     right: -40px;
     margin: 0;
-    background-color: transparent;
+    padding: 0;
+    background: transparent url(../../../images/Close-Icon.svg) center no-repeat;
+    background-size: contain;
+    border: none;
     width: 32px;
     height: 32px;
     cursor: pointer;
