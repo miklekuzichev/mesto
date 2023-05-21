@@ -1,6 +1,6 @@
-/* CSS стили для popup__edit */
+/* CSS стили для popup__title */
 
-.popup__edit{
+.popup__title{
     margin: 0;
     padding: 0;
     padding-left: 36px;
@@ -14,7 +14,7 @@
 }
 
 @media screen and (max-width: 780px) {
-    .popup__edit{
+    .popup__title{
         padding-left: 22px;
         padding-top: 25px;
         padding-bottom: 45px;
