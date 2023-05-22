@@ -1,0 +1,12 @@
+/* CSS стили для popup__figure */
+
+.popup__figure{
+    margin: 0;
+    display: flex;
+    position: relative;
+    /*flex-direction: column;
+    justify-content: space-between;*/
+}
+
+
+
