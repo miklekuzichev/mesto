@@ -56,7 +56,7 @@ let nameInput = document.querySelector('.popup__input_type_name');
 let jobInput = document.querySelector('.popup__input_type_profile');
 let buttonPopupAdd = document.querySelector('.profile__add-button');
 
-let buttonPopupOpenImg = document.querySelector('.card__open-image');
+
 
 
 // Add new card in index.html
@@ -67,11 +67,18 @@ const cardLoadTemplate = document.querySelector('.cards');
 function addNewCard (titleValue, srcValue) {
   const userElement = cardTemplate.querySelector('.card').cloneNode(true);
   userElement.querySelector('.card__image').src = srcValue;
+  userElement.querySelector('.card__image').alt = 'Картинка ' + titleValue;
   userElement.querySelector('.card__text').textContent = titleValue;
   cardLoadTemplate.prepend(userElement);
 }
 //
 //
+function deleteCard (titleValue, srcValue) {
+  const userElement = cardTemplate.querySelector('.card').cloneNode(true);
+  userElement.querySelector('.card__image').src = srcValue;
+  userElement.querySelector('.card__text').textContent = titleValue;
+  cardLoadTemplate.prepend(userElement);
+}
 //console.log(cardTemplate);
 //console.log(cardLoadTemplate);
 
@@ -86,15 +93,30 @@ function addNewCard (titleValue, srcValue) {
 
 let openImg = document.querySelectorAll('.card__open-image');
 
-let openOldImg = document.getElementsByTagName('button');
+let deleteCrd = document.querySelectorAll('.card__delete');
+
 console.log(openImg);
-console.log(openOldImg);
+console.log(deleteCrd);
+//let openOldImg = document.getElementsByTagName('button');
+//console.log(openOldImg);
 
 
 
-function changeColor() {
-  console.log('Привет!');
+function openPopup() {
+  const pp = this.querySelector('.card__image').src;
+  const uu = this.querySelector('.card__image').alt;
   console.log(this);
+  popupFormOpenImg.querySelector('.popup__img').src = pp;
+  popupFormOpenImg.querySelector('.popup__figcaption').textContent = uu;
+  
+  
+  console.log(popupFormOpenImg.querySelector('.popup__figcaption'));
+
+  //popupFormOpenImg.querySelector('.popup__img').alt = uu;
+  //tt = popupFormOpenImg.querySelector('.popup__img');
+  //ttImg = tt.src;
+  //console.log(ttImg);
+  popupOpened(popupFormOpenImg);
 };
 
 //const buttons = document.getElementsByTagName('button');
@@ -102,11 +124,11 @@ function changeColor() {
 for (let i = 0; i < openImg.length; ++i) {
   const button = openImg[i];
   // к каждой кнопке привязываем обработчик
-  button.addEventListener('click', changeColor); // обратите внимание, что мы не вызываем
-  // функцию changeColor, а только пишем ее имя
+  button.addEventListener('click', openPopup); // обратите внимание, что мы не вызываем
+  // функцию openPopup, а только пишем ее имя
 }
 
-
+let buttonPopupOpenImg = document.querySelector('.card__open-image');
 
 
 function popupRemove (popup_type) {

@@ -1,7 +1,8 @@
 /* CSS стили для popup__img */
 
 .popup__img{
-    width: 100%;
+    max-width: 75vw;
+    max-height: 75vh;
     object-fit: contain;
     margin: 0;
     padding: 0;

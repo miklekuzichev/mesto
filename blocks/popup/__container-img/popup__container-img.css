@@ -1,8 +1,6 @@
 /* CSS стили для popup__container-img */
 
 .popup__container-img{
-    max-width: 75vw;
-    max-height: 75vh;
     position: relative;
     display: flex;
     justify-content: center;
