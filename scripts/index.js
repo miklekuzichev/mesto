@@ -73,11 +73,8 @@ function addNewCard (titleValue, srcValue) {
 }
 //
 //
-function deleteCard (titleValue, srcValue) {
-  const userElement = cardTemplate.querySelector('.card').cloneNode(true);
-  userElement.querySelector('.card__image').src = srcValue;
-  userElement.querySelector('.card__text').textContent = titleValue;
-  cardLoadTemplate.prepend(userElement);
+function deleteCard () {
+  this.parentElement.remove();
 }
 //console.log(cardTemplate);
 //console.log(cardLoadTemplate);
@@ -93,25 +90,30 @@ function deleteCard (titleValue, srcValue) {
 
 let openImg = document.querySelectorAll('.card__open-image');
 
+let textVal = document.querySelectorAll('.card');
+
+
 let deleteCrd = document.querySelectorAll('.card__delete');
+
+//openImg[0].remove();
+
 
 console.log(openImg);
 console.log(deleteCrd);
 //let openOldImg = document.getElementsByTagName('button');
 //console.log(openOldImg);
 
+//deleteCrd.addEventListener('click', () => {
+//  console.log('Delete!');
+//});
 
 
-function openPopup() {
-  const pp = this.querySelector('.card__image').src;
-  const uu = this.querySelector('.card__image').alt;
-  console.log(this);
-  popupFormOpenImg.querySelector('.popup__img').src = pp;
-  popupFormOpenImg.querySelector('.popup__figcaption').textContent = uu;
-  
-  
+function openImagePopup() {
+  const linkImg = this.querySelector('.card__image').src;
+  const textImg = this.parentElement.querySelector('.card__text').textContent;
+  popupFormOpenImg.querySelector('.popup__img').src = linkImg;
+  popupFormOpenImg.querySelector('.popup__figcaption').textContent = textImg;
   console.log(popupFormOpenImg.querySelector('.popup__figcaption'));
-
   //popupFormOpenImg.querySelector('.popup__img').alt = uu;
   //tt = popupFormOpenImg.querySelector('.popup__img');
   //ttImg = tt.src;
@@ -123,12 +125,16 @@ function openPopup() {
 
 for (let i = 0; i < openImg.length; ++i) {
   const button = openImg[i];
+  const deleteButton = deleteCrd[i];
+  
   // к каждой кнопке привязываем обработчик
-  button.addEventListener('click', openPopup); // обратите внимание, что мы не вызываем
-  // функцию openPopup, а только пишем ее имя
+  button.addEventListener('click', openImagePopup); // обратите внимание, что мы не вызываем
+  // функцию openImagePopup, а только пишем ее имя
+  deleteButton.addEventListener('click', deleteCard);
+
 }
 
-let buttonPopupOpenImg = document.querySelector('.card__open-image');
+//let buttonPopupOpenImg = document.querySelector('.card__open-image');
 
 
 function popupRemove (popup_type) {
@@ -174,12 +180,12 @@ buttonPopupAdd.addEventListener('click', () => {
     //jobInput.value = profileSubtitle.textContent;
 });
 
-buttonPopupOpenImg.addEventListener('click', () => {
-    popupOpened(popupFormOpenImg);
+//buttonPopupOpenImg.addEventListener('click', () => {
+//    popupOpened(popupFormOpenImg);
     // Предзаполнение формы
     //nameInput.value = profileTitle.textContent;
     //jobInput.value = profileSubtitle.textContent;
-});
+//});
 
 
 buttonPopupEditClose.addEventListener('click', () => {
