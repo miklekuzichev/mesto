@@ -1,3 +1,38 @@
+const initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+    //link: './images/dombay.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+    //link: './images/elbrus.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+    //link: '../images/karachaevsk.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+    //link: './images/dombay.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+    //link: './images/dombay.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+    //link: './images/dombay.jpg'
+  }
+];
+
+
+
 let popup = document.querySelector('.popup');
 let popupFormEdit = document.querySelector('.popup_form_edit');
 let popupFormAdd = document.querySelector('.popup_form_add');
@@ -23,51 +58,53 @@ let buttonPopupAdd = document.querySelector('.profile__add-button');
 
 let buttonPopupOpenImg = document.querySelector('.card__open-image');
 
+
+// Add new card in index.html
+//
 const cardTemplate = document.querySelector('#card-template').content;
 const cardLoadTemplate = document.querySelector('.cards');
 
+function addNewCard (titleValue, srcValue) {
+  const userElement = cardTemplate.querySelector('.card').cloneNode(true);
+  userElement.querySelector('.card__image').src = srcValue;
+  userElement.querySelector('.card__text').textContent = titleValue;
+  cardLoadTemplate.prepend(userElement);
+}
+//
+//
+//console.log(cardTemplate);
+//console.log(cardLoadTemplate);
 
-const userElement = cardTemplate.querySelector('.card').cloneNode(true);
+ // addNewCard(initialCards[0].name, initialCards[0].link);
+ // addNewCard(initialCards[1].name, initialCards[1].link);
+ // addNewCard(initialCards[2].name, initialCards[2].link);
+  
+  for(let i = 0; i < initialCards.length; i++) {
+    addNewCard(initialCards[i].name, initialCards[i].link);
+  }
+//
 
-userElement.querySelector('.card__image').src = './images/elbrus.jpg'; //'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg';
-userElement.querySelector('.card__text').textContent = 'Архыз';
+let openImg = document.querySelectorAll('.card__open-image');
 
-cardLoadTemplate.prepend(userElement);
+let openOldImg = document.getElementsByTagName('button');
+console.log(openImg);
+console.log(openOldImg);
 
 
 
-console.log(cardTemplate);
-console.log(cardLoadTemplate);
+function changeColor() {
+  console.log('Привет!');
+  console.log(this);
+};
 
-console.log(userElement);
+//const buttons = document.getElementsByTagName('button');
 
-const initialCards = [
-    {
-      name: 'Архыз',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-      name: 'Челябинская область',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-      name: 'Иваново',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-      name: 'Камчатка',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-      name: 'Холмогорский район',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-      name: 'Байкал',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-  ];
-
+for (let i = 0; i < openImg.length; ++i) {
+  const button = openImg[i];
+  // к каждой кнопке привязываем обработчик
+  button.addEventListener('click', changeColor); // обратите внимание, что мы не вызываем
+  // функцию changeColor, а только пишем ее имя
+}
 
 
 
@@ -134,3 +171,30 @@ buttonPopupAddClose.addEventListener('click', () => {
 buttonPopupOpenImgClose.addEventListener('click', () => {
     popupRemove(popupFormOpenImg);
 });
+
+
+
+
+
+
+
+
+
+/*
+function AddSong (artistValue, titleValue) {
+  const songTemplate = document.querySelector('#song-templte').content;
+  const songElement = songTemplate.querySelector('.song').cloneNode(true);
+
+  songElement.querySelector('.song__artist').textContent = artistValue;
+  songElement.querySelector('.song__title').textContent = titleValue;
+
+  songContainer.append(songElement);
+}
+*/
+
+/*
+  for(let i = 0; i < song.length; i++) {
+    songs[i].remove();
+
+  }
+*/
