@@ -43,8 +43,8 @@ const nameInput = document.querySelector('.popup__input_type_name');
 const jobInput = document.querySelector('.popup__input_type_profile');
 const buttonPopupAdd = document.querySelector('.profile__add-button');
 
-const imageNameInput = document.querySelector('.popup__input_type_image_name');
-const imageLinkInput = document.querySelector('.popup__input_type_url_image');
+const imageNameInput = document.querySelector('.popup__input_type_imagename');
+const imageLinkInput = document.querySelector('.popup__input_type_imageurl');
 
 const cardTemplate = document.querySelector('#card-template').content;
 const cardLoadTemplate = document.querySelector('.cards');
