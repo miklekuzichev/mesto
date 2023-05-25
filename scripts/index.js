@@ -1,33 +1,9 @@
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
-
 const popupFormEdit = document.querySelector('.popup_form_edit');
 const popupFormAdd = document.querySelector('.popup_form_add');
 const popupFormOpenImg = document.querySelector('.popup_form_open-img');
+const popupFormOpenImgPicture = popupFormOpenImg.querySelector('.popup__img');
+const popupFormOpenImgFigcaption = popupFormOpenImg.querySelector('.popup__figcaption');
+
 const buttonPopupEdit = document.querySelector('.profile__edit-button');
 const buttonPopupEditClose = document.querySelector('.popup_form_edit').querySelector('.popup__close');
 const buttonPopupAddClose = document.querySelector('.popup_form_add').querySelector('.popup__close');
@@ -59,29 +35,26 @@ formAddElement.addEventListener('submit', imageFormSubmit);
 //
 // Добавляем карточки при загрузке страницы из массива initialCards и устанавливаем слушатели событий на кнопки открытия картинки, удаления картинки и кнопки лайка
 for(let i = 0; i < initialCards.length; i++) {
-  addInitCard(initialCards[i].name, initialCards[i].link);
-  // к каждой кнопке привязываем обработчик
-  EventListeners(i);
-}
-//
-// Функция добавления новой карочки в index.html из массива при загрузке страницы
-//
-function addInitCard (titleValue, srcValue) {
-  const userElement = cardTemplate.querySelector('.card').cloneNode(true);
-  userElement.querySelector('.card__image').src = srcValue;
-  userElement.querySelector('.card__image').alt = 'Картинка ' + titleValue;
-  userElement.querySelector('.card__text').textContent = titleValue;
-  cardLoadTemplate.append(userElement);
+  cardLoadTemplate.append(addNewCard(initialCards[i].name, initialCards[i].link));
 }
 //
 // Функция добавления новой карочки в index.html
 //
 function addNewCard (titleValue, srcValue) {
   const userElement = cardTemplate.querySelector('.card').cloneNode(true);
-  userElement.querySelector('.card__image').src = srcValue;
-  userElement.querySelector('.card__image').alt = 'Картинка ' + titleValue;
+  const userElementCardImage = userElement.querySelector('.card__image');
+  userElementCardImage.src = srcValue;
+  userElementCardImage.alt = 'Картинка ' + titleValue;
   userElement.querySelector('.card__text').textContent = titleValue;
-  cardLoadTemplate.prepend(userElement);
+  const eventOpenImg = userElement.querySelector('.card__open-image');
+  const eventDeleteButton = userElement.querySelector('.card__delete');
+  const eventActiveLike = userElement.querySelector('.card__heart-button');
+  eventOpenImg.addEventListener('click', openImagePopup); 
+  eventDeleteButton.addEventListener('click', deleteCard);
+  eventActiveLike.addEventListener('click', function() {
+    makeLike('card__heart-button-active', this);
+  });
+  return userElement;
 }
 //
 // Функция удвления карочки из index.html
@@ -92,16 +65,8 @@ function deleteCard () {
 //
 // Функция заменияет картинку сердечка при нажатии на него
 //
-function makeLike (a, b, elem) {
-  function replaceClass (a, b, elem) {
-    elem.classList.remove(a);
-    elem.classList.add(b);
-  }
-  if (elem.classList.contains(a)) {
-    replaceClass(a, b, elem);
-  } else {
-    replaceClass(b, a, elem);
-  }
+function makeLike (classActiveLike, elem) {
+  elem.classList.toggle(classActiveLike);
 }
 //
 // Функция открытия попапа картинки
@@ -109,23 +74,11 @@ function makeLike (a, b, elem) {
 function openImagePopup() {
   const linkImg = this.querySelector('.card__image').src;
   const textImg = this.parentElement.querySelector('.card__text').textContent;
-  popupFormOpenImg.querySelector('.popup__img').src = linkImg;
-  popupFormOpenImg.querySelector('.popup__figcaption').textContent = textImg;
+  popupFormOpenImgPicture.src = linkImg;
+  popupFormOpenImgPicture.alt = 'Картинка ' + textImg;
+  popupFormOpenImgFigcaption.textContent = textImg;
   popupOpened(popupFormOpenImg);
 };
-//
-// Функция установки слушателей событий на кнопки открытия картинки, удаления картинки и кнопки лайка
-//
-function EventListeners (i = 0) {
-  const eventOpenImg = document.querySelectorAll('.card__open-image')[i];
-  const eventDeleteButton = document.querySelectorAll('.card__delete')[i];
-  const eventActiveLike = document.querySelectorAll('.card__heart-button')[i];
-  eventOpenImg.addEventListener('click', openImagePopup); 
-  eventDeleteButton.addEventListener('click', deleteCard);
-  eventActiveLike.addEventListener('click', function() {
-    makeLike('card__heart-button', 'card__heart-button-active', this);
-  });
-}
 //
 // Функция открытия попапа
 //
@@ -152,10 +105,10 @@ function handleFormSubmit (evt) {
 //
 function imageFormSubmit (evt) {
   evt.preventDefault(); 
-  addNewCard(imageNameInput.value, imageLinkInput.value);
+  cardLoadTemplate.prepend(addNewCard(imageNameInput.value, imageLinkInput.value));
   popupRemove(popupFormAdd);
   evt.target.reset(); // сбрасывает поля формы после закрытия попапа
-  EventListeners(); // к новой карточке привязываем обработчик
+  //EventListeners(); // к новой карточке привязываем обработчик
 }
 //
 // Добавление слушателя событий для попапа редактирования данных профиля
