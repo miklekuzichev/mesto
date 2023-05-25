@@ -15,8 +15,8 @@ const profileSubtitle = document.querySelector('.profile__subtitle');
 const formEditElement = document.querySelector('.popup_form_edit').querySelector('.popup__form');
 const formAddElement = document.querySelector('.popup_form_add').querySelector('.popup__form');
 
-const nameInput = document.querySelector('.popup__input_type_name');
-const jobInput = document.querySelector('.popup__input_type_profile');
+const editNameInput = document.querySelector('.popup__input_type_name');
+const editJobInput = document.querySelector('.popup__input_type_profile');
 const buttonPopupAdd = document.querySelector('.profile__add-button');
 
 const imageNameInput = document.querySelector('.popup__input_type_imagename');
@@ -27,20 +27,20 @@ const cardLoadTemplate = document.querySelector('.cards');
 //
 // Добавление слушателя событий для кнопки submit попапа редактирования данных профиля
 //
-formEditElement.addEventListener('submit', handleFormSubmit); 
+formEditElement.addEventListener('submit', submitHandleForm); 
 //
 // Добавление слушателя событий для кнопки submit попапа добавления новой карточки
 //
-formAddElement.addEventListener('submit', imageFormSubmit);
+formAddElement.addEventListener('submit', submitImageForm);
 //
 // Добавляем карточки при загрузке страницы из массива initialCards и устанавливаем слушатели событий на кнопки открытия картинки, удаления картинки и кнопки лайка
 for(let i = 0; i < initialCards.length; i++) {
-  cardLoadTemplate.append(addNewCard(initialCards[i].name, initialCards[i].link));
+  cardLoadTemplate.append(createCard(initialCards[i].name, initialCards[i].link));
 }
 //
 // Функция добавления новой карочки в index.html
 //
-function addNewCard (titleValue, srcValue) {
+function createCard (titleValue, srcValue) {
   const userElement = cardTemplate.querySelector('.card').cloneNode(true);
   const userElementCardImage = userElement.querySelector('.card__image');
   userElementCardImage.src = srcValue;
@@ -77,36 +77,36 @@ function openImagePopup() {
   popupFormOpenImgPicture.src = linkImg;
   popupFormOpenImgPicture.alt = 'Картинка ' + textImg;
   popupFormOpenImgFigcaption.textContent = textImg;
-  popupOpened(popupFormOpenImg);
+  openPopup(popupFormOpenImg);
 };
 //
 // Функция открытия попапа
 //
-function popupOpened (popup_type) {
+function openPopup (popup_type) {
   popup_type.classList.add('popup_opened');
 }
 //
 // Функция закрытия попапа
 //
-function popupRemove (popup_type) {
+function removePopup (popup_type) {
     popup_type.classList.remove('popup_opened');
 }
 //
 // Функция - обработчик «отправки» формы редактирования профиля
 //
-function handleFormSubmit (evt) {
+function submitHandleForm (evt) {
     evt.preventDefault(); 
-    profileTitle.textContent = nameInput.value;
-    profileSubtitle.textContent = jobInput.value;
-    popupRemove(popupFormEdit);
+    profileTitle.textContent = editNameInput.value;
+    profileSubtitle.textContent = editJobInput.value;
+    removePopup(popupFormEdit);
 }
 //
 // Функция - обработчик «отправки» формы добавления новой карточки
 //
-function imageFormSubmit (evt) {
+function submitImageForm (evt) {
   evt.preventDefault(); 
-  cardLoadTemplate.prepend(addNewCard(imageNameInput.value, imageLinkInput.value));
-  popupRemove(popupFormAdd);
+  cardLoadTemplate.prepend(createCard(imageNameInput.value, imageLinkInput.value));
+  removePopup(popupFormAdd);
   evt.target.reset(); // сбрасывает поля формы после закрытия попапа
   //EventListeners(); // к новой карточке привязываем обработчик
 }
@@ -114,34 +114,34 @@ function imageFormSubmit (evt) {
 // Добавление слушателя событий для попапа редактирования данных профиля
 //
 buttonPopupEdit.addEventListener('click', () => {
-    popupOpened(popupFormEdit);
-    // Предзаполнение формы
-    nameInput.value = profileTitle.textContent;
-    jobInput.value = profileSubtitle.textContent;
+  openPopup(popupFormEdit);
+  // Предзаполнение формы
+  editNameInput.value = profileTitle.textContent;
+  editJobInput.value = profileSubtitle.textContent;
 });
 //
 // Добавление слушателя событий для попапа добавления новой карточки
 //
 buttonPopupAdd.addEventListener('click', () => {
-    popupOpened(popupFormAdd);
+  openPopup(popupFormAdd);
 });
 //
 // Добавление слушателя событий для кнопки закрытия попапа редактирования данных пользователя
 //
 buttonPopupEditClose.addEventListener('click', () => {
-    popupRemove(popupFormEdit);
+  removePopup(popupFormEdit);
 });
 //
 // Добавление слушателя событий для кнопки закрытия попапа добавления новой карточки
 //
 buttonPopupAddClose.addEventListener('click', () => {
-    popupRemove(popupFormAdd);
+  removePopup(popupFormAdd);
 });
 //
 // Добавление слушателя событий для кнопки закрытия попапа полноэкранного просмотра картинки
 //
 buttonPopupOpenImgClose.addEventListener('click', () => {
-    popupRemove(popupFormOpenImg);
+  removePopup(popupFormOpenImg);
 });
 //
 
