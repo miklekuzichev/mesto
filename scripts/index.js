@@ -27,7 +27,7 @@ const cardLoadTemplate = document.querySelector('.cards');
 //
 // Добавление слушателя событий для кнопки submit попапа редактирования данных профиля
 //
-formEditElement.addEventListener('submit', submitHandleForm); 
+formEditElement.addEventListener('submit', submitEditProfileForm); 
 //
 // Добавление слушателя событий для кнопки submit попапа добавления новой карточки
 //
@@ -82,19 +82,19 @@ function openImagePopup() {
 //
 // Функция открытия попапа
 //
-function openPopup (popup_type) {
-  popup_type.classList.add('popup_opened');
+function openPopup (popup) {
+  popup.classList.add('popup_opened');
 }
 //
 // Функция закрытия попапа
 //
-function removePopup (popup_type) {
-    popup_type.classList.remove('popup_opened');
+function removePopup (popup) {
+  popup.classList.remove('popup_opened');
 }
 //
 // Функция - обработчик «отправки» формы редактирования профиля
 //
-function submitHandleForm (evt) {
+function submitEditProfileForm (evt) {
     evt.preventDefault(); 
     profileTitle.textContent = editNameInput.value;
     profileSubtitle.textContent = editJobInput.value;
