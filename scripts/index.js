@@ -132,6 +132,20 @@ buttonPopupEditClose.addEventListener('click', () => {
   removePopup(popupFormEdit);
 });
 //
+// Добавление слушателя событий для кнопки "Escape" для закрытия любого открытого попапа
+//
+window.addEventListener('keydown', function (evt) {
+  if(evt.keyCode == 27) { //27 - KeyCode "Escape"
+    if(popupFormEdit.classList.contains('popup_opened')) {
+      removePopup(popupFormEdit);
+    } else if(popupFormAdd.classList.contains('popup_opened')) {
+      removePopup(popupFormAdd);
+    } else if(popupFormOpenImg.classList.contains('popup_opened')) {
+      removePopup(popupFormOpenImg);
+    } 
+  }
+});
+//
 // Добавление слушателя событий для кнопки закрытия попапа добавления новой карточки
 //
 buttonPopupAddClose.addEventListener('click', () => {
