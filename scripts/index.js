@@ -111,6 +111,18 @@ function submitImageForm (evt) {
   //EventListeners(); // к новой карточке привязываем обработчик
 }
 //
+// Функция для закрытия открытого в данный момент попапа
+//
+function removeCurrentPopup () {
+  if(popupFormEdit.classList.contains('popup_opened')) {
+    removePopup(popupFormEdit);
+  } else if(popupFormAdd.classList.contains('popup_opened')) {
+    removePopup(popupFormAdd);
+  } else if(popupFormOpenImg.classList.contains('popup_opened')) {
+    removePopup(popupFormOpenImg);
+  } 
+}
+//
 // Добавление слушателя событий для попапа редактирования данных профиля
 //
 buttonPopupEdit.addEventListener('click', () => {
@@ -136,16 +148,16 @@ buttonPopupEditClose.addEventListener('click', () => {
 //
 window.addEventListener('keydown', function (evt) {
   if(evt.keyCode == 27) { //27 - KeyCode "Escape"
-    if(popupFormEdit.classList.contains('popup_opened')) {
-      removePopup(popupFormEdit);
-    } else if(popupFormAdd.classList.contains('popup_opened')) {
-      removePopup(popupFormAdd);
-    } else if(popupFormOpenImg.classList.contains('popup_opened')) {
-      removePopup(popupFormOpenImg);
-    } 
+    removeCurrentPopup();
   }
 });
 //
+window.addEventListener('click', function (evt) {
+//  console.log(evt.srcElement.classList.contains('popup_opened'));
+  if(evt.srcElement.classList.contains('popup_opened')) { 
+    removeCurrentPopup();
+  }
+});
 // Добавление слушателя событий для кнопки закрытия попапа добавления новой карточки
 //
 buttonPopupAddClose.addEventListener('click', () => {
