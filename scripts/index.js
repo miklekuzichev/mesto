@@ -82,15 +82,33 @@ function openImagePopup() {
 //
 // Функция открытия попапа
 //
+
+function selectEventListenerKey(event) {
+//  console.log(event.currentTarget);
+  if(event.keyCode == 27) { //27 - KeyCode "Escape"
+
+    //console.log(document.querySelector('.popup_form_edit'));
+
+    removeCurrentPopup();
+  }
+}
+
+
+
+
+//window.addEventListener('click', handleMouseClick)
+
 function openPopup (popup) {
   popup.classList.add('popup_opened');
+  document.addEventListener('keydown', selectEventListenerKey);
 }
 //
 // Функция закрытия попапа
 //
 function removePopup (popup) {
   popup.classList.remove('popup_opened');
-}
+  document.removeEventListener('keydown', selectEventListenerKey);
+};
 //
 // Функция - обработчик «отправки» формы редактирования профиля
 //
@@ -120,17 +138,69 @@ function removeCurrentPopup () {
     removePopup(popupFormAdd);
   } else if(popupFormOpenImg.classList.contains('popup_opened')) {
     removePopup(popupFormOpenImg);
-  } 
+  }
 }
 //
+//////////////////////////////////////////////////////////////////////////////////////////////////
+const formElement = document.querySelector('.popup__input');
+
+formElement.addEventListener('submit', function (evt) {
+  evt.preventDefault();
+});
+
+console.log(formElement);
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+/*const setEventListeners = (formElement) => {
+  const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener('input', function () {
+      checkInputValidity(formElement, inputElement);
+    });
+  });
+};
+*/
+
+
+
+const enableValidation = (formElement) => {
+  const formList = Array.from(document.querySelectorAll('.popup__form'));
+  console.log(formList);
+  //formList.forEach((formElement) => {
+  //  formElement.addEventListener('submit', function (evt) {
+  //    evt.preventDefault();
+  //    });
+  //    setEventListeners(formElement);
+    
+  //});
+};
+
+
+// включение валидации вызовом enableValidation
+// все настройки передаются при вызове
+/*
+enableValidation({
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+}); 
+*/
+
 // Добавление слушателя событий для попапа редактирования данных профиля
 //
+
 buttonPopupEdit.addEventListener('click', () => {
   openPopup(popupFormEdit);
   // Предзаполнение формы
   editNameInput.value = profileTitle.textContent;
   editJobInput.value = profileSubtitle.textContent;
 });
+
 //
 // Добавление слушателя событий для попапа добавления новой карточки
 //
@@ -143,6 +213,9 @@ buttonPopupAdd.addEventListener('click', () => {
 buttonPopupEditClose.addEventListener('click', () => {
   removePopup(popupFormEdit);
 });
+
+
+/*
 //
 // Добавление слушателя событий для кнопки "Escape" для закрытия любого открытого попапа
 //
@@ -158,6 +231,10 @@ window.addEventListener('click', function (evt) {
     removeCurrentPopup();
   }
 });
+*/
+
+
+
 // Добавление слушателя событий для кнопки закрытия попапа добавления новой карточки
 //
 buttonPopupAddClose.addEventListener('click', () => {
