@@ -142,13 +142,48 @@ function removeCurrentPopup () {
 }
 //
 //////////////////////////////////////////////////////////////////////////////////////////////////
-const formElement = document.querySelector('.popup__input');
+const formElement = document.querySelector('.popup__form');
+const formInput = formElement.querySelector('.popup__input_type_name');
+const formError = formElement.querySelector(`.${formInput.id}-error`);
+
+const showError = (input, errorMessage) => {
+  input.classList.add('popup__input_type_error');
+  formError.textContent = errorMessage;
+  formError.classList.add('popup__input-error-active');
+};
+
+const hideError = (input) => {
+  input.classList.remove('popup__input_type_error');
+};
+
+console.log(formInput.id);
+console.log(formElement);
+console.log(formInput);
+console.log(formInput.validationMessage);
+
+
+
+const checkInputValidity = () => {
+  console.log(formInput.validationMessage);
+  if (!formInput.validity.valid) {
+    showError(formInput, formInput.validationMessage);
+  } else {
+    hideError(formInput);
+  }
+  
+};
+
 
 formElement.addEventListener('submit', function (evt) {
   evt.preventDefault();
 });
 
-console.log(formElement);
+formInput.addEventListener('input', function (evt) {
+  console.log(evt.target.validity);
+  checkInputValidity();
+});
+
+
 
 
 
