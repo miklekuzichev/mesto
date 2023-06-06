@@ -38,6 +38,9 @@ for(let i = 0; i < initialCards.length; i++) {
   cardLoadTemplate.append(createCard(initialCards[i].name, initialCards[i].link));
 }
 //
+profileTitle.textContent = "Жак-Ив Кусто";
+profileSubtitle.textContent = "Исследователь океана";
+//
 // Функция добавления новой карочки в index.html
 //
 function createCard (titleValue, srcValue) {
@@ -57,7 +60,7 @@ function createCard (titleValue, srcValue) {
   return userElement;
 }
 //
-// Функция удвления карочки из index.html
+// Функция удаления карочки из index.html
 //
 function deleteCard () {
   this.parentElement.remove();
@@ -141,42 +144,6 @@ function removeCurrentPopup () {
   }
 }
 //
-//////////////////////////////////////////////////////////////////////////////////////////////////
-const formElement = document.querySelector('.popup__input');
-
-formElement.addEventListener('submit', function (evt) {
-  evt.preventDefault();
-});
-
-console.log(formElement);
-
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////
-/*const setEventListeners = (formElement) => {
-  const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
-  inputList.forEach((inputElement) => {
-    inputElement.addEventListener('input', function () {
-      checkInputValidity(formElement, inputElement);
-    });
-  });
-};
-*/
-
-
-
-const enableValidation = (formElement) => {
-  const formList = Array.from(document.querySelectorAll('.popup__form'));
-  console.log(formList);
-  //formList.forEach((formElement) => {
-  //  formElement.addEventListener('submit', function (evt) {
-  //    evt.preventDefault();
-  //    });
-  //    setEventListeners(formElement);
-    
-  //});
-};
-
 
 // включение валидации вызовом enableValidation
 // все настройки передаются при вызове
@@ -249,4 +216,101 @@ buttonPopupOpenImgClose.addEventListener('click', () => {
 //
 
 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//const formElement = document.querySelector('.popup__form');
+//const formInput = formElement.querySelector('.popup__input_type_name');
+//const formError = formElement.querySelector(`.${formInput.id}-error`);
+
+
+const showError = (formElement, input, errorMessage) => {
+  const errorElement = formElement.querySelector(`.${input.id}-error`);
+  input.classList.add('popup__input_type_error');
+  console.log('errorElement - ', errorElement);
+  errorElement.textContent = errorMessage;
+  errorElement.classList.add('popup__input-error-active');
+};
+
+const hideError = (formElement, input) => {
+  const errorElement = formElement.querySelector(`.${input.id}-error`);
+  input.classList.remove('popup__input_type_error');
+  errorElement.classList.remove('popup__input-error-active');
+  errorElement.textContent = '';
+};
+
+
+//console.log(formElement);
+//console.log(formInput);
+//console.log(formInput.validationMessage);
+
+
+
+
+const enableValidation = () => {
+  const formList = Array.from(document.querySelectorAll('.popup__form'));
+  formList.forEach((formElement) => {
+    formElement.addEventListener('submit', function (evt) {
+      evt.preventDefault();
+      });
+      //setEventListeners(formElement);
+      const fieldsetList = Array.from(formElement.querySelectorAll('.popup__fieldset'));
+      fieldsetList.forEach((fieldSet) => {
+        setEventListeners(fieldSet);
+      });
+
+
+  });
+};
+
+
+function hasInvalidInput(inputList) {
+  console.log("inputList - ", inputList);
+  return inputList.some((inputElement) => {
+    console.log("inputElement - ", inputElement);
+    return !inputElement.validity.valid;
+  })
+}; 
+
+function toggleButtonState(inputList, buttonElement) {
+  //console.log("hasInvalidInput(inputList) - ", hasInvalidInput(inputList));
+  if (hasInvalidInput(inputList)) {
+    buttonElement.classList.add('popup__save_inactive');
+  } else {
+    buttonElement.classList.remove('popup__save_inactive');
+  }
+}; 
+
+
+
+const checkInputValidity = (formElement, inputElement) => {
+  if (!inputElement.validity.valid) {
+    showError(formElement, inputElement, inputElement.validationMessage);
+  } else {
+    hideError(formElement, inputElement);
+  }
+};
+
+
+const setEventListeners = (formElement) => {
+  const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
+  const buttonElement = formElement.querySelector('.popup__save');
+  toggleButtonState(inputList, buttonElement);
+
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener('input', function () {
+      checkInputValidity(formElement, inputElement);
+      toggleButtonState(inputList, buttonElement);
+    });
+  });
+};
+
+enableValidation();
+
+
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -43,3 +43,12 @@
 @import url(../blocks/popup/__figure/popup__figure.css);
 @import url(../blocks/popup/__figcaption/popup__figcaption.css);
 @import url(../blocks/popup/__input-error/popup__input-error.css);
+@import url(../blocks/popup/__input-error/_active/popup__input-error-active.css);
+@import url(../blocks/popup/__input/type_error/popup__input_type_error.css);
+@import url(../blocks/popup/__save/_inactive/popup__save_inactive.css);
+
+
+.border {
+    border: 1px solid #FF0000;
+  }
+
