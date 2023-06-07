@@ -21,13 +21,10 @@ const showError = (formElement, input, errorMessage, inputErrorClass, errorClass
   const enableValidation = ({formSelector, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass}) => {
     const formList = Array.from(document.querySelectorAll(formSelector));
     formList.forEach((formElement) => {
-      formElement.addEventListener('submit', function (evt) {
+        formElement.addEventListener('submit', function (evt) {
         evt.preventDefault();
         });
-        const fieldsetList = Array.from(formElement.querySelectorAll('.popup__fieldset'));
-        fieldsetList.forEach((fieldSet) => {
-          setEventListeners(fieldSet, inputSelector, inputErrorClass, inactiveButtonClass, submitButtonSelector, errorClass);
-        });
+        setEventListeners(formElement, inputSelector, inputErrorClass, inactiveButtonClass, submitButtonSelector, errorClass);
     });
   };
   //
@@ -42,8 +39,10 @@ const showError = (formElement, input, errorMessage, inputErrorClass, errorClass
   function toggleButtonState(inputList, buttonElement, inactiveButtonClass) {
     if (hasInvalidInput(inputList)) {
       buttonElement.classList.add(inactiveButtonClass);
+      buttonElement.setAttribute("disabled", "");
     } else {
       buttonElement.classList.remove(inactiveButtonClass);
+      buttonElement.removeAttribute("disabled", "");
     }
   }; 
   //
@@ -60,7 +59,6 @@ const showError = (formElement, input, errorMessage, inputErrorClass, errorClass
   const setEventListeners = (formElement, inputSelector, inputErrorClass, inactiveButtonClass, submitButtonSelector, errorClass) => {
     const inputList = Array.from(formElement.querySelectorAll(inputSelector));
     const buttonElement = formElement.querySelector(submitButtonSelector);
-    //toggleButtonState(inputList, buttonElement);
     inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', function () {
         checkInputValidity(formElement, inputElement, inputErrorClass, errorClass);

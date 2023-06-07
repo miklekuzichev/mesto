@@ -37,6 +37,9 @@ for(let i = 0; i < initialCards.length; i++) {
 profileTitle.textContent = "Жак-Ив Кусто";
 profileSubtitle.textContent = "Исследователь океана";
 //
+buttonAddElement.classList.add('popup__button_disabled');
+buttonAddElement.setAttribute("disabled", "");
+//
 // Функция добавления новой карочки в index.html
 //
 function createCard (titleValue, srcValue) {
@@ -82,7 +85,8 @@ function openImagePopup() {
 // Функция закрытия открытого попапа при нажатии клавиши Escape
 //
 function selectEventListenerKey(event) {
-  if(event.keyCode == 27) { //27 - KeyCode "Escape"
+  const keyCodeEscape = 27; //27 - KeyCode "Escape"
+  if(event.keyCode == keyCodeEscape) { 
     removeCurrentPopup();
   }
 }
@@ -90,14 +94,8 @@ function selectEventListenerKey(event) {
 // Функция для закрытия открытого в данный момент попапа
 //
 function removeCurrentPopup () {
-  const arrayAllPopup = Array.from(document.querySelectorAll('.popup'));
-  arrayAllPopup.forEach((inputElement) => {
-    if(inputElement.classList.contains('popup_opened')) {
-      removePopup(inputElement);
-    }
-  });
-  document.removeEventListener('keydown', selectEventListenerKey);
-  document.addEventListener('click', selectEventListenerClick);
+  const openedPopup = document.querySelector('.popup_opened');
+  removePopup(openedPopup);
 }
 //
 // Функция открытия попапа
@@ -105,13 +103,15 @@ function removeCurrentPopup () {
 function openPopup (popup) {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', selectEventListenerKey);
-  document.addEventListener('click', selectEventListenerClick);
+  document.addEventListener('mousedown', selectEventListenerClick);
 }
 //
 // Функция закрытия попапа
 //
 function removePopup (popup) {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', selectEventListenerKey);
+  document.removeEventListener('mousedown', selectEventListenerClick);
 };
 //
 // Функция - обработчик «отправки» формы редактирования профиля
@@ -130,12 +130,13 @@ function submitImageForm (evt) {
   cardLoadTemplate.prepend(createCard(imageNameInput.value, imageLinkInput.value));
   removePopup(popupFormAdd);
   evt.target.reset(); // сбрасывает поля формы после закрытия попапа
+  buttonAddElement.classList.add('popup__button_disabled');
+  buttonAddElement.setAttribute("disabled", "");
   //EventListeners(); // к новой карточке привязываем обработчик
 }
 //
 // Добавление слушателя событий для попапа редактирования данных профиля
 //
-
 buttonPopupEdit.addEventListener('click', () => {
   openPopup(popupFormEdit);
   // Предзаполнение формы
@@ -147,7 +148,6 @@ buttonPopupEdit.addEventListener('click', () => {
 // Добавление слушателя событий для попапа добавления новой карточки
 //
 buttonPopupAdd.addEventListener('click', () => {
-  buttonAddElement.classList.add('popup__button_disabled');
   openPopup(popupFormAdd);
 });
 //
@@ -160,7 +160,7 @@ buttonPopupEditClose.addEventListener('click', () => {
 // Добавление слушателя событий для клика вне попапа
 //
 function selectEventListenerClick (event) {
-    if(event.srcElement.classList.contains('popup_opened')) { 
+    if(event.target.classList.contains('popup_opened')) { 
       removeCurrentPopup();
     }
 }
