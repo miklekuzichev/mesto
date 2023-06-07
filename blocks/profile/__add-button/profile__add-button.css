@@ -13,6 +13,7 @@
     background-color:#000000;
     background: transparent url(../../../images/add-button.svg) center no-repeat;
     background-size: contain;
+    outline: none;
 }
 
 .profile__add-button:hover{
