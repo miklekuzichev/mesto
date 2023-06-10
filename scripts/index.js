@@ -65,7 +65,7 @@ function deleteCard () {
   this.parentElement.remove();
 }
 //
-// Функция заменияет картинку сердечка при нажатии на него
+// Функция заменяет картинку сердечка при нажатии на него
 //
 function makeLike (classActiveLike, elem) {
   elem.classList.toggle(classActiveLike);
