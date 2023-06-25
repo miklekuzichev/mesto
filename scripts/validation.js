@@ -105,7 +105,6 @@ class FormValidator {
     this._inputSelector = enableValidationDev.inputSelector; // formElement.querySelector(enableValidationDev.inputSelector);
     this._submitButtonSelector = enableValidationDev.submitButtonSelector;
     this._inactiveButtonClass = enableValidationDev.inactiveButtonClass;
-    this._inactiveButtonClass = enableValidationDev.inactiveButtonClass;
     this._inputErrorClass = enableValidationDev.inputErrorClass;
     this._errorClass = enableValidationDev.errorClass;
     //
@@ -147,7 +146,39 @@ _checkInputValidity() {
 //
 
 
+//
+  _toggleButtonState() {
+    if (this._hasInvalidInput()) {
+      this._submitButtonSelector.classList.add(this._inactiveButtonClass);
+      this._submitButtonSelector.setAttribute("disabled", "");
+    } else {
+      this._submitButtonSelector.classList.remove(this._inactiveButtonClass);
+      this._submitButtonSelector.removeAttribute("disabled", "");
+    }
+}; 
+//
 
+
+
+//
+_setEventListeners() {
+  this._inputList = Array.from(this._formElement.querySelectorAll(inputSelector));
+  this._formElement.forEach((inputElement) => {
+    inputElement.addEventListener('input', () => {
+      this._checkInputValidity();
+      this._toggleButtonState();
+    });
+  });
+};
+//
+
+
+setFormState() {
+  this._inputList.forEach((inputElement) => {
+    this._hideError(inputElement);
+  });
+  this._toggleButtonState();
+}
 
 
 
@@ -156,12 +187,8 @@ _checkInputValidity() {
 
 
   enableValidation() {
-    console.log(_enableValidationDev);
-
-    this._formElement.addEventListener('submint', function (evt) {
-      evt.preventDefault();
-      //console.log(this._enableValidationDev);
-    });
+    console.log("Hello!");
+    this._setEventListeners();
 
   };
 
