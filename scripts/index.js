@@ -166,11 +166,78 @@ buttonPopupOpenImgClose.addEventListener('click', () => {
 //
 
 
+class Card {
+  construktor(cardData, cardTemplate) {
+    this._name = cardData.name;
+    this._link = cardData.link;
+    this._cardTemplate = cardTemplate;
+  }
+
+
+// получение разметки template
+_getTemplate() {
+  const cardElement = document
+    .querySelector(this._templateSelector)
+    .content
+    .querySelector('.card')
+    .cloneNode(true);
+  // возврат разметки card
+  return cardElement;
+}
+
+
+//
+// Функция удаления карочки из index.html
+//
+_deleteCard () {
+  this._element.remove();
+}
+//
+// Функция заменяет картинку сердечка при нажатии на него
+//
+_makeLike() {
+  this._eventActiveLike.classList.toggle('card__heart-button-active');
+}
+//
+
+
+
+
+generateCard() {
+  this._element = this._getTemplate();
+  this._userElementCardImage = this._element.querySelector('.card__image');
+  this._eventActiveLike = this._element.querySelector('.card__heart-button');
+  this._eventDeleteButton = this._element.querySelector('.card__delete');
+  this._userElementCardImage.alt = 'Картинка ' + this._name;
+  this._userElementCardImage.src = this._link;
+  this._element.querySelector('.card__text').textContent = this._name;
+  //
+  this._hasDeleteBtn();////
+  this._isCardLiked();/////
+  this._setEventListeners();/////
+  //
+  return this._element;
+}
+
+
+
+
+}
 
 
 
 
 
+
+
+
+//
+//
+//
+//
+//
+//
+//
 const enableValidation = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
@@ -194,8 +261,6 @@ class FormValidator {
   }
 //
   _showError(inputElement) {
-  
-    //console.log("inputElement ", inputElement);
     const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
     inputElement.classList.add(this._inputErrorClass);
     errorElement.textContent = inputElement.validationMessage;
@@ -211,8 +276,6 @@ class FormValidator {
 //
 //
 _checkInputValidity(inputElement) {
-//  console.log("inputElement ", inputElement);
-//  console.log("this._formElement ", this._formElement);
   const go = this._formElement.querySelector(this._inputSelector);
   if (!inputElement.validity.valid) {
     this._showError(inputElement);
