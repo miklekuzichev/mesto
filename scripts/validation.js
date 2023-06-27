@@ -2,9 +2,14 @@
 // Универсальная проверка заполнения формы
 //
 const showError = (formElement, input, errorMessage, inputErrorClass, errorClass) => {
+  console.log("<< input >>", input);
     const errorElement = formElement.querySelector(`.${input.id}-error`);
+  console.log("<< errorElement >>", errorElement);
+  console.log("<< inputErrorClass >>", inputErrorClass);
     input.classList.add(inputErrorClass);
+  console.log("<< errorElement >>", errorElement);
     errorElement.textContent = errorMessage;
+  console.log("<< errorClass >>", errorClass);
     errorElement.classList.add(errorClass);
   };
 //
@@ -51,8 +56,8 @@ function toggleButtonState(inputList, buttonElement, inactiveButtonClass) {
 //
 //
 //
-const checkInputValidity = (formElement, inputElement, inputErrorClass, errorClass) => {
-    if (!inputElement.validity.valid) {
+const checkInputValidity = (formElement, inputElement, inputErrorClass, errorClass) => { 
+  if (!inputElement.validity.valid) {
       showError(formElement, inputElement, inputElement.validationMessage, inputErrorClass, errorClass);
     } else {
       hideError(formElement, inputElement, inputErrorClass, errorClass);
@@ -84,7 +89,7 @@ enableValidation({
 });
 
 
-
+/*
 const enableValidationDev = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
@@ -95,18 +100,21 @@ const enableValidationDev = {
 };
 
 
-
+const inputListDev = Array.from(formElement.querySelectorAll(inputSelector));
+    console.log(inputList[0]);
 
 
 class FormValidator {
   constructor(enableValidationDev, formElement) {
     this._enableValidationDev = enableValidationDev;
+    //
     this._formSelector = enableValidationDev.formSelector; 
     this._inputSelector = enableValidationDev.inputSelector; // formElement.querySelector(enableValidationDev.inputSelector);
-    this._submitButtonSelector = enableValidationDev.submitButtonSelector;
+    this._inputListDev = Array.from(formElement.querySelectorAll(enableValidationDev.inputSelector));
+    this._submitButtonSelector = formElement.querySelectorAll(enableValidationDev.submitButtonSelector)//enableValidationDev.submitButtonSelector;
     this._inactiveButtonClass = enableValidationDev.inactiveButtonClass;
     this._inputErrorClass = enableValidationDev.inputErrorClass;
-    this._errorClass = enableValidationDev.errorClass;
+    this._errorClass = formElement.querySelectorAll(enableValidationDev.errorClass)//enableValidationDev.errorClass;
     //
     this._formElement = formElement;
   }
@@ -200,8 +208,11 @@ setFormState() {
 }
 
 
-const test = new FormValidator(enableValidationDev, );
+const formEditValidate = new FormValidator(enableValidationDev, popupFormEdit);
+formEditValidate.enableValidation();
+const formAddValidate = new FormValidator(enableValidationDev, popupAddEdit);
+formAddValidate.enableValidation();
 
-test.enableValidation();
 
 
+*/
