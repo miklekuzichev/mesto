@@ -25,12 +25,12 @@ _getTemplate() {
 //
 generateCard() {
   this._element = this._getTemplate();
-  this._userElementCardImage = this._element.querySelector('.card__image');//
-  this._eventActiveLike = this._element.querySelector('.card__heart-button');//
-  this._eventDeleteButton = this._element.querySelector('.card__delete');//
-  this._userElementCardImage.alt = 'Картинка ' + this._name;//
-  this._userElementCardImage.src = this._link;//
-  this._element.querySelector('.card__text').textContent = this._name;//
+  this._userElementCardImage = this._element.querySelector('.card__image');
+  this._eventActiveLike = this._element.querySelector('.card__heart-button');
+  this._eventDeleteButton = this._element.querySelector('.card__delete');
+  this._userElementCardImage.alt = 'Картинка ' + this._name;
+  this._userElementCardImage.src = this._link;
+  this._element.querySelector('.card__text').textContent = this._name;
   this._eventOpenImg = this._element.querySelector('.card__open-image');
   this._setEventListeners();
   //
