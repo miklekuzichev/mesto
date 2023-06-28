@@ -28,10 +28,11 @@ formEditElement.addEventListener('submit', submitEditProfileForm);
 //
 formAddElement.addEventListener('submit', submitImageForm);
 //
+/*
 // Добавляем карточки при загрузке страницы из массива initialCards и устанавливаем слушатели событий на кнопки открытия картинки, удаления картинки и кнопки лайка
 for(let i = 0; i < initialCards.length; i++) {
   cardLoadTemplate.append(createCard(initialCards[i].name, initialCards[i].link));
-}
+}*/
 //
 // Предзаполнение контента на странице
 profileTitle.textContent = "Жак-Ив Кусто";
@@ -62,6 +63,19 @@ function openImagePopup() {
   popupFormOpenImgFigcaption.textContent = textImg;
   openPopup(popupFormOpenImg);
 };
+
+
+//
+// Функция открытия попапа картинки
+//
+function openImagePopupp(name, link) {
+  popupFormOpenImgPicture.src = link;
+  popupFormOpenImgPicture.alt = 'Картинка ' + name;
+  popupFormOpenImgFigcaption.textContent = name;
+  openPopup(popupFormOpenImg);
+};
+
+
 //
 // Функция закрытия открытого попапа при нажатии клавиши Escape
 //
@@ -108,12 +122,13 @@ function submitEditProfileForm (evt) {
 //
 function submitImageForm (evt) {
   evt.preventDefault(); 
-  cardLoadTemplate.prepend(createCard(imageNameInput.value, imageLinkInput.value));
+  const card = new Card({name: imageNameInput.value, link: imageLinkInput.value}, '#card-template', openImagePopupp);
+  const cardElement = card.generateCard();
+  cardLoadTemplate.prepend(cardElement);
   removePopup(popupFormAdd);
   evt.target.reset(); // сбрасывает поля формы после закрытия попапа
   buttonAddElement.classList.add('popup__button_disabled');
   buttonAddElement.setAttribute("disabled", "");
-  //EventListeners(); // к новой карточке привязываем обработчик
 }
 //
 // Добавление слушателя событий для попапа редактирования данных профиля
@@ -167,10 +182,11 @@ buttonPopupOpenImgClose.addEventListener('click', () => {
 
 
 class Card {
-  constructor(cardData, cardTemplate) {
+  constructor(cardData, cardTemplate, openImagePopup) {
     this._name = cardData.name;
     this._link = cardData.link;
     this._cardTemplate = cardTemplate;
+    this._openImagePopup = openImagePopup;
   }
 
 
@@ -194,13 +210,7 @@ generateCard() {
   this._userElementCardImage.src = this._link;//
   this._element.querySelector('.card__text').textContent = this._name;//
   this._eventOpenImg = this._element.querySelector('.card__open-image');
-
-
-  //
- // this._hasDeleteBtn();////
- // this._isCardLiked();/////
- //
-  this._setEventListeners();/////
+  this._setEventListeners();
   //
   return this._element;
 }
@@ -218,53 +228,12 @@ _makeLike() {
   this._eventActiveLike.classList.toggle('card__heart-button-active');
 }
 //
-
-/*
-const userElement = cardTemplate.querySelector('.card').cloneNode(true);
-const eventOpenImg = userElement.querySelector('.card__open-image');
-eventOpenImg.addEventListener('click', openImagePopup); 
-*/
-
-
 //
-// Функция открытия попапа
-//
-_openPopup () {
-  this._popupFormOpenImg.classList.add('popup_opened');
-}
-//
-/*
-//
-// Функция открытия попапа
-//
-function openPopup (popup) {
-  popup.classList.add('popup_opened');
-  document.addEventListener('keydown', selectEventListenerKey);
-  document.addEventListener('mousedown', selectEventListenerClick);
-}
-//
-*/
-// открытие попапа картинки
-//
-_openImagePopup() {
-  this._popupFormOpenImg = document.querySelector('.popup_type_img');
-  this._popupFormOpenImgPicture = this._popupFormOpenImg.querySelector('.popup__img');
-  this._popupFormOpenImgFigcaption = this._popupFormOpenImg.querySelector('.popup__figcaption');
-  this._popupFormOpenImgPicture.src = this._userElementCardImage.src;
-  this._popupFormOpenImgPicture.alt = 'Картинка ' + this._userElementCardImage.alt;
-  this._popupFormOpenImgFigcaption.textContent = this._name;
-  this._openPopup();
-};
-//
-
-
-
-//////////// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  // Устанавливаем слушатели на карточку
+// Устанавливаем слушатели на карточку
   _setEventListeners() {
     // открытие попапа просмотра изображения кликом по изображению
     this._userElementCardImage.addEventListener('click', () => {
-      this._openImagePopup();
+      this._openImagePopup(this._name, this._link);
     })
     // слушатель кнопки удаления карточки
     this._eventDeleteButton.addEventListener('click', () => {
@@ -279,19 +248,11 @@ _openImagePopup() {
       }
     })
   }
-
-
-
-
-
-
 }
-
-
 
 const renderInitCards = (initialCards) => {
   initialCards.forEach((item) => {
-    const card = new Card(item, '#card-template');
+    const card = new Card(item, '#card-template', openImagePopupp);
     const cardElement = card.generateCard();
     cardLoadTemplate.append(cardElement);
   });
