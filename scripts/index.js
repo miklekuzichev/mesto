@@ -167,7 +167,7 @@ buttonPopupOpenImgClose.addEventListener('click', () => {
 
 
 class Card {
-  construktor(cardData, cardTemplate) {
+  constructor(cardData, cardTemplate) {
     this._name = cardData.name;
     this._link = cardData.link;
     this._cardTemplate = cardTemplate;
@@ -177,7 +177,7 @@ class Card {
 // получение разметки template
 _getTemplate() {
   const cardElement = document
-    .querySelector(this._templateSelector)
+    .querySelector(this._cardTemplate)
     .content
     .querySelector('.card')
     .cloneNode(true);
@@ -185,6 +185,25 @@ _getTemplate() {
   return cardElement;
 }
 
+generateCard() {
+  this._element = this._getTemplate();
+  this._userElementCardImage = this._element.querySelector('.card__image');//
+  this._eventActiveLike = this._element.querySelector('.card__heart-button');//
+  this._eventDeleteButton = this._element.querySelector('.card__delete');//
+  this._userElementCardImage.alt = 'Картинка ' + this._name;//
+  this._userElementCardImage.src = this._link;//
+  this._element.querySelector('.card__text').textContent = this._name;//
+  this._eventOpenImg = this._element.querySelector('.card__open-image');
+
+
+  //
+ // this._hasDeleteBtn();////
+ // this._isCardLiked();/////
+ //
+  this._setEventListeners();/////
+  //
+  return this._element;
+}
 
 //
 // Функция удаления карочки из index.html
@@ -200,36 +219,85 @@ _makeLike() {
 }
 //
 
+/*
+const userElement = cardTemplate.querySelector('.card').cloneNode(true);
+const eventOpenImg = userElement.querySelector('.card__open-image');
+eventOpenImg.addEventListener('click', openImagePopup); 
+*/
+
+
+//
+// Функция открытия попапа
+//
+_openPopup () {
+  this._popupFormOpenImg.classList.add('popup_opened');
+}
+//
+/*
+//
+// Функция открытия попапа
+//
+function openPopup (popup) {
+  popup.classList.add('popup_opened');
+  document.addEventListener('keydown', selectEventListenerKey);
+  document.addEventListener('mousedown', selectEventListenerClick);
+}
+//
+*/
+// открытие попапа картинки
+//
+_openImagePopup() {
+  this._popupFormOpenImg = document.querySelector('.popup_type_img');
+  this._popupFormOpenImgPicture = this._popupFormOpenImg.querySelector('.popup__img');
+  this._popupFormOpenImgFigcaption = this._popupFormOpenImg.querySelector('.popup__figcaption');
+  this._popupFormOpenImgPicture.src = this._userElementCardImage.src;
+  this._popupFormOpenImgPicture.alt = 'Картинка ' + this._userElementCardImage.alt;
+  this._popupFormOpenImgFigcaption.textContent = this._name;
+  this._openPopup();
+};
+//
 
 
 
-generateCard() {
-  this._element = this._getTemplate();
-  this._userElementCardImage = this._element.querySelector('.card__image');
-  this._eventActiveLike = this._element.querySelector('.card__heart-button');
-  this._eventDeleteButton = this._element.querySelector('.card__delete');
-  this._userElementCardImage.alt = 'Картинка ' + this._name;
-  this._userElementCardImage.src = this._link;
-  this._element.querySelector('.card__text').textContent = this._name;
-  //
-  this._hasDeleteBtn();////
-  this._isCardLiked();/////
-  this._setEventListeners();/////
-  //
-  return this._element;
+//////////// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  // Устанавливаем слушатели на карточку
+  _setEventListeners() {
+    // открытие попапа просмотра изображения кликом по изображению
+    this._userElementCardImage.addEventListener('click', () => {
+      this._openImagePopup();
+    })
+    // слушатель кнопки удаления карточки
+    this._eventDeleteButton.addEventListener('click', () => {
+      this._deleteCard();
+    })
+    // слушатель кнопки лайк
+    this._eventActiveLike.addEventListener('click', () => {
+      if (this._eventActiveLike.classList.contains('element__like-btn_active')) {
+        this._makeLike();
+      } else {
+        this._makeLike();
+      }
+    })
+  }
+
+
+
+
+
+
 }
 
 
 
-
+const renderInitCards = (initialCards) => {
+  initialCards.forEach((item) => {
+    const card = new Card(item, '#card-template');
+    const cardElement = card.generateCard();
+    cardLoadTemplate.append(cardElement);
+  });
 }
 
-
-
-
-
-
-
+renderInitCards(initialCards);
 
 //
 //
