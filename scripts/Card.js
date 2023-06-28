@@ -41,6 +41,7 @@ generateCard() {
 //
 _deleteCard () {
   this._element.remove();
+  this._element = null;
 }
 //
 // Функция заменяет картинку сердечка при нажатии на него
@@ -62,11 +63,7 @@ _makeLike() {
     })
     // слушатель кнопки лайк
     this._eventActiveLike.addEventListener('click', () => {
-      if (this._eventActiveLike.classList.contains('element__like-btn_active')) {
         this._makeLike();
-      } else {
-        this._makeLike();
-      }
     })
   }
 }

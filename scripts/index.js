@@ -1,5 +1,6 @@
 import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
+import { initialCards } from "./constants.js";
 //
 //
 //
@@ -52,8 +53,7 @@ function openImagePopup(name, link) {
 // Функция закрытия открытого попапа при нажатии клавиши Escape
 //
 function selectEventListenerKey(event) {
-  const keyCodeEscape = 27; //27 - KeyCode "Escape"
-  if(event.keyCode == keyCodeEscape) { 
+  if(event.key == 'Escape') { 
     removeCurrentPopup();
   }
 }

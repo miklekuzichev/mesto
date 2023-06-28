@@ -2,14 +2,14 @@
 // Класс валидации поля формы
 //
 export default class FormValidator {
-    constructor(enableValidation, formElement) {
-      this._formSelector = enableValidation.formSelector; 
-      this._inputSelector = enableValidation.inputSelector; 
-      this._inputList = Array.from(formElement.querySelectorAll(enableValidation.inputSelector));
-      this._submitButtonSelector = formElement.querySelector(enableValidation.submitButtonSelector);
-      this._inactiveButtonClass = enableValidation.inactiveButtonClass;
-      this._inputErrorClass = enableValidation.inputErrorClass;
-      this._errorClass = enableValidation.errorClass;
+    constructor(validationConfig, formElement) {
+      this._formSelector = validationConfig.formSelector; 
+      this._inputSelector = validationConfig.inputSelector; 
+      this._inputList = Array.from(formElement.querySelectorAll(validationConfig.inputSelector));
+      this._submitButtonSelector = formElement.querySelector(validationConfig.submitButtonSelector);
+      this._inactiveButtonClass = validationConfig.inactiveButtonClass;
+      this._inputErrorClass = validationConfig.inputErrorClass;
+      this._errorClass = validationConfig.errorClass;
       this._formElement = formElement;
     }
 //
@@ -34,7 +34,6 @@ export default class FormValidator {
 //
 //
   _checkInputValidity(inputElement) {
-    const go = this._formElement.querySelector(this._inputSelector);
     if (!inputElement.validity.valid) {
       this._showError(inputElement);
     } else {
