@@ -17,13 +17,23 @@ const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
 const formEditElement = document.querySelector('.popup_type_edit').querySelector('.popup__form');
 const formAddElement = document.querySelector('.popup_type_add').querySelector('.popup__form');
-const buttonAddElement = document.querySelector('.popup_type_add').querySelector('.popup__button');
 const editNameInput = document.querySelector('.popup__input_type_name');
 const editJobInput = document.querySelector('.popup__input_type_profile');
 const buttonPopupAdd = document.querySelector('.profile__add-button');
 const imageNameInput = document.querySelector('.popup__input_type_imagename');
 const imageLinkInput = document.querySelector('.popup__input_type_imageurl');
 const cardLoadTemplate = document.querySelector('.cards');
+const enableValidation = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+};
+//
+const formEditValidate = new FormValidator(enableValidation, popupFormEdit);
+const formAddValidate = new FormValidator(enableValidation, popupFormAdd);
 //
 // Добавление слушателя событий для кнопки submit попапа редактирования данных профиля
 //
@@ -37,9 +47,6 @@ formAddElement.addEventListener('submit', submitImageForm);
 //
 profileTitle.textContent = "Жак-Ив Кусто";
 profileSubtitle.textContent = "Исследователь океана";
-//
-buttonAddElement.classList.add('popup__button_disabled');
-buttonAddElement.setAttribute("disabled", "");
 //
 // Функция открытия попапа картинки
 //
@@ -99,8 +106,7 @@ function submitImageForm (evt) {
   cardLoadTemplate.prepend(cardElement);
   removePopup(popupFormAdd);
   evt.target.reset(); // сбрасывает поля формы после закрытия попапа
-  buttonAddElement.classList.add('popup__button_disabled');
-  buttonAddElement.setAttribute("disabled", "");
+  formAddValidate.toggleButtonState();
 }
 //
 // Добавление слушателя событий для попапа редактирования данных профиля
@@ -160,20 +166,8 @@ renderInitCards(initialCards);
 //
 //
 //
-const enableValidation = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible'
-};
-//
-//
-//
-const formEditValidate = new FormValidator(enableValidation, popupFormEdit);
 formEditValidate.enableValidation();
-const formAddValidate = new FormValidator(enableValidation, popupFormAdd);
+formAddValidate.toggleButtonState();
 formAddValidate.enableValidation();
 
 
