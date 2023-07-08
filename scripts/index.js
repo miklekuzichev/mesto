@@ -1,5 +1,6 @@
 import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
+import Section from './Section.js';
 import { initialCards } from "./constants.js";
 //
 //
@@ -166,15 +167,18 @@ buttonPopupOpenImgClose.addEventListener('click', () => {
 //
 //
 //
-const renderInitCards = (initialCards) => {
-  initialCards.forEach((item) => {
-    cardLoadTemplate.append(createCard(item));
-  });
-}
+const CardList = new Section({ data: initialCards, 
+  renderer: (item) => {
+    //const card = new Card(item, '#card-template', openImagePopup);
+    //const cardElement = card.generateCard();
+
+    CardList.addItem(createCard(item));
+    
+  }}, '.cards');
 //
 //
 //
-renderInitCards(initialCards);
+  CardList.renderItems();
 //
 //
 //
