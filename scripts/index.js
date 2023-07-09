@@ -2,6 +2,8 @@ import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
 import Section from './Section.js';
 import Popup from './Popup.js';
+import PopupWithImage from "./PopupWithImage.js";
+import PopupWithForm from "./PopupWithForm.js";
 import { initialCards } from "./constants.js";
 //
 //
@@ -10,8 +12,8 @@ const popups = document.querySelectorAll('.popup');
 const popupFormEdit = document.querySelector('.popup_type_edit');
 const popupFormAdd = document.querySelector('.popup_type_add');
 const popupFormOpenImg = document.querySelector('.popup_type_img');
-const popupFormOpenImgPicture = popupFormOpenImg.querySelector('.popup__img');
-const popupFormOpenImgFigcaption = popupFormOpenImg.querySelector('.popup__figcaption');
+//const popupFormOpenImgPicture = popupFormOpenImg.querySelector('.popup__img');
+//const popupFormOpenImgFigcaption = popupFormOpenImg.querySelector('.popup__figcaption');
 const buttonPopupEdit = document.querySelector('.profile__edit-button');
 const buttonPopupEditClose = document.querySelector('.popup_type_edit').querySelector('.popup__close');
 const buttonPopupAddClose = document.querySelector('.popup_type_add').querySelector('.popup__close');
@@ -53,18 +55,24 @@ profileSubtitle.textContent = "Исследователь океана";
 //
 // Функция открытия попапа картинки
 //
-function openImagePopup(name, link) {
-  popupFormOpenImgPicture.src = link;
-  popupFormOpenImgPicture.alt = 'Картинка ' + name;
-  popupFormOpenImgFigcaption.textContent = name;
-  openPopup(popupFormOpenImg);
-};
+//function openImagePopup(name, link) {
+//  popupFormOpenImgPicture.src = link;
+//  popupFormOpenImgPicture.alt = 'Картинка ' + name;
+//  popupFormOpenImgFigcaption.textContent = name;
+//  openPopup(popupFormOpenImg);
+//};
+//
+// Создание экземпляра класса PopupWithImage
+//
+const openImagePopup = new PopupWithImage('.popup_type_img');
+openImagePopup.setEventListeners();
 //
 // Функция закрытия открытого попапа при нажатии клавиши Escape
 //
 function selectEventListenerKey(event) {
   if(event.key == 'Escape') { 
     removeCurrentPopup();
+    //removePopup();
   }
 }
 //
@@ -107,7 +115,14 @@ function submitEditProfileForm (evt) {
 // Функция генерации карточки
 //
 const createCard = (data) => {
-  const card = new Card(data, '#card-template', openImagePopup);
+  const card = new Card( {
+    cardData: data, 
+    cardTemplate: '#card-template', 
+    //openImagePopup
+    handleCardClick: (name, link) => {
+      openImagePopup.open(name, link);
+    }
+  });
   const cardElement = card.generateCard();
   return cardElement
 }
@@ -168,13 +183,14 @@ buttonPopupOpenImgClose.addEventListener('click', () => {
 //
 //
 //
-const CardList = new Section({ data: initialCards, 
+
+
+const CardList = new Section({ 
+  data: initialCards, 
   renderer: (item) => {
     //const card = new Card(item, '#card-template', openImagePopup);
     //const cardElement = card.generateCard();
-
     CardList.addItem(createCard(item));
-    
   }}, '.cards');
 //
 //

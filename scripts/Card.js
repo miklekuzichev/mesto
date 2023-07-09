@@ -2,11 +2,11 @@
 // Класс добавления новой карочки в index.html
 //
 export default class Card {
-  constructor(cardData, cardTemplate, openImagePopup) {
+  constructor({ cardData, cardTemplate, handleCardClick }) {
     this._name = cardData.name;
     this._link = cardData.link;
     this._cardTemplate = cardTemplate;
-    this._openImagePopup = openImagePopup;
+    this._handleCardClick = handleCardClick;
   }
 //
 // получение разметки template
@@ -55,7 +55,7 @@ _makeLike() {
   _setEventListeners() {
     // открытие попапа просмотра изображения кликом по изображению
     this._userElementCardImage.addEventListener('click', () => {
-      this._openImagePopup(this._name, this._link);
+      this._handleCardClick(this._name, this._link);
     })
     // слушатель кнопки удаления карточки
     this._eventDeleteButton.addEventListener('click', () => {
