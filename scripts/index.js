@@ -1,6 +1,7 @@
 import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
 import Section from './Section.js';
+import UserInfo from './UserInfo.js';
 import PopupWithImage from "./PopupWithImage.js";
 import PopupWithForm from "./PopupWithForm.js";
 import { initialCards } from "./constants.js";
@@ -24,8 +25,8 @@ const profileSubtitle = document.querySelector('.profile__subtitle');
 const editNameInput = document.querySelector('.popup__input_type_name');
 const editJobInput = document.querySelector('.popup__input_type_profile');
 const buttonPopupAdd = document.querySelector('.profile__add-button');
-const imageNameInput = document.querySelector('.popup__input_type_imagename');
-const imageLinkInput = document.querySelector('.popup__input_type_imageurl');
+//const imageNameInput = document.querySelector('.popup__input_type_imagename');
+//const imageLinkInput = document.querySelector('.popup__input_type_imageurl');
 //const cardLoadTemplate = document.querySelector('.cards');
 const enableValidation = {
   formSelector: '.popup__form',
@@ -51,6 +52,23 @@ const formAddValidate = new FormValidator(enableValidation, popupFormAdd);
 //
 profileTitle.textContent = "Жак-Ив Кусто";
 profileSubtitle.textContent = "Исследователь океана";
+
+const userSelector = { name: '.profile__title', 
+                       profile: '.profile__subtitle' };
+
+const userProfile = new UserInfo( userSelector );
+
+
+
+
+
+
+
+
+
+
+
+
 //
 // Функция открытия попапа картинки
 //
@@ -174,8 +192,6 @@ buttonPopupEdit.addEventListener('click', () => {
 buttonPopupAdd.addEventListener('click', () => {
   addCardPopup.open();
   //openPopup(popupFormAdd);
-  imageNameInput.value = '';
-  imageLinkInput.value = '';
   formAddValidate.resetValidation();
 });
 //
