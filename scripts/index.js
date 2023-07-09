@@ -20,7 +20,7 @@ const buttonPopupAddClose = document.querySelector('.popup_type_add').querySelec
 const buttonPopupOpenImgClose = document.querySelector('.popup_type_img').querySelector('.popup__close');
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
-const formEditElement = document.querySelector('.popup_type_edit').querySelector('.popup__form');
+//const formEditElement = document.querySelector('.popup_type_edit').querySelector('.popup__form');
 const formAddElement = document.querySelector('.popup_type_add').querySelector('.popup__form');
 const editNameInput = document.querySelector('.popup__input_type_name');
 const editJobInput = document.querySelector('.popup__input_type_profile');
@@ -42,7 +42,7 @@ const formAddValidate = new FormValidator(enableValidation, popupFormAdd);
 //
 // Добавление слушателя событий для кнопки submit попапа редактирования данных профиля
 //
-formEditElement.addEventListener('submit', submitEditProfileForm); 
+//formEditElement.addEventListener('submit', submitEditProfileForm); 
 //
 // Добавление слушателя событий для кнопки submit попапа добавления новой карточки
 //
@@ -61,6 +61,34 @@ profileSubtitle.textContent = "Исследователь океана";
 //  popupFormOpenImgFigcaption.textContent = name;
 //  openPopup(popupFormOpenImg);
 //};
+
+
+// создание попапа с формой редактирования профиля
+const editProfilePopup = new PopupWithForm({
+  selector: '.popup_type_edit',
+  handleFormSubmit: (data) => {
+    submitEditProfileForm(data);
+  }
+});
+editProfilePopup.setEventListeners();
+
+
+// создание попапа с кнопкой добавления карточки
+const addCardPopup = new PopupWithForm({
+  selector: '.popup_type_add',
+  handleFormSubmit: (data) => {
+    submitEditProfileForm(data);
+    console.log('data ', data);
+  }
+});
+addCardPopup.setEventListeners();
+
+
+
+
+
+
+
 //
 // Создание экземпляра класса PopupWithImage
 //
@@ -105,11 +133,10 @@ function removePopup (popup) {
 //
 // Функция - обработчик «отправки» формы редактирования профиля
 //
-function submitEditProfileForm (evt) {
-    evt.preventDefault(); 
-    profileTitle.textContent = editNameInput.value;
-    profileSubtitle.textContent = editJobInput.value;
-    removePopup(popupFormEdit);
+function submitEditProfileForm (data) {
+    profileTitle.textContent = data.username;
+    profileSubtitle.textContent = data.userprofile;
+    editProfilePopup.close();
 }
 //
 // Функция генерации карточки
@@ -132,7 +159,8 @@ const createCard = (data) => {
 function submitImageForm (evt) {
   evt.preventDefault(); 
   cardLoadTemplate.prepend(createCard({name: imageNameInput.value, link: imageLinkInput.value}));
-  removePopup(popupFormAdd);
+  //removePopup(popupFormAdd);
+  addCardPopup.close();
   evt.target.reset(); // сбрасывает поля формы после закрытия попапа
   formAddValidate.resetValidation();
 }
@@ -140,7 +168,8 @@ function submitImageForm (evt) {
 // Добавление слушателя событий для попапа редактирования данных профиля
 //
 buttonPopupEdit.addEventListener('click', () => {
-  openPopup(popupFormEdit);
+  //openPopup(popupFormEdit);
+  editProfilePopup.open();
   // Предзаполнение формы
   editNameInput.value = profileTitle.textContent;
   editJobInput.value = profileSubtitle.textContent;
@@ -149,7 +178,8 @@ buttonPopupEdit.addEventListener('click', () => {
 // Добавление слушателя событий для попапа добавления новой карточки
 //
 buttonPopupAdd.addEventListener('click', () => {
-  openPopup(popupFormAdd);
+  addCardPopup.open();
+  //openPopup(popupFormAdd);
   imageNameInput.value = '';
   imageLinkInput.value = '';
   formAddValidate.resetValidation();
