@@ -10,13 +10,13 @@ export default class PopupWithImage extends Popup {
     this._popupOpenImage = this._popup.querySelector('.popup__img');
   }
 //
+// Публичный метод открытия попапа
 //
-//
-  open(name, link) {
+  open(imgName, imgUrl) {
     super.open();
-    this._popupOpenName.textContent = name;
-    this._popupOpenImage.alt = name;
-    this._popupOpenImage.src = link;
+    this._popupOpenName.textContent = imgName;
+    this._popupOpenImage.alt = imgName;
+    this._popupOpenImage.src = imgUrl;
   }
 }
 //
