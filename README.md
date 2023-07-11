@@ -21,5 +21,13 @@
 * Возможность добавлять и удалять картинки пользователя
 * Подключение к серверу и получение данных с него
 
+## Сборка проекта
+
+* git clone git@github.com:miklekuzichev/mesto.git
+* cd mesto
+* npm i webpack --save-dev
+* npm run build
+* npm run dev
+
 Ссылка на проект: [gh-pages](https://miklekuzichev.github.io/mesto/index.html).
 

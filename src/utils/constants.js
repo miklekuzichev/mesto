@@ -24,13 +24,6 @@ const initialCards = [
       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
     }
   ];
-//
-  const popupFormEdit = document.querySelector('.popup_type_edit');
-  const popupFormAdd = document.querySelector('.popup_type_add');
-  const buttonPopupEdit = document.querySelector('.profile__edit-button');
-  const editNameInput = document.querySelector('.popup__input_type_name');
-  const editJobInput = document.querySelector('.popup__input_type_profile');
-  const buttonPopupAdd = document.querySelector('.profile__add-button');
   //
   const enableValidation = {
     formSelector: '.popup__form',
@@ -47,12 +40,6 @@ const initialCards = [
   //
   export {
     initialCards,
-    popupFormEdit,
-    popupFormAdd,
-    buttonPopupEdit,
-    editNameInput,
-    editJobInput,
-    buttonPopupAdd,
     enableValidation,
     initUser,
     userSelector

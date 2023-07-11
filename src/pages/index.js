@@ -7,16 +7,19 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import {
   initialCards,
-  popupFormEdit,
-  popupFormAdd,
-  buttonPopupEdit,
-  editNameInput,
-  editJobInput,
-  buttonPopupAdd,
   enableValidation,
   initUser,
   userSelector
-} from '../components/constants.js';
+} from '../utils/constants.js';
+//
+//
+//
+const popupFormEdit = document.querySelector('.popup_type_edit');
+const popupFormAdd = document.querySelector('.popup_type_add');
+const buttonPopupEdit = document.querySelector('.profile__edit-button');
+const editNameInput = document.querySelector('.popup__input_type_name');
+const editJobInput = document.querySelector('.popup__input_type_profile');
+const buttonPopupAdd = document.querySelector('.profile__add-button');
 //
 // Создаем новые обьекты класса FormValidator
 //
@@ -79,7 +82,7 @@ const createCard = (data) => {
 // Функция - обработчик «отправки» формы добавления новой карточки
 //
 function submitImageForm (data) {
-  CardList.addItem(createCard({name: data.imagename, link: data.imagelink}));
+  cardList.addItem(createCard({name: data.imagename, link: data.imagelink}));
   addCardPopup.close();
   formAddValidate.resetValidation();
 }
@@ -88,6 +91,7 @@ function submitImageForm (data) {
 //
 buttonPopupEdit.addEventListener('click', () => {
   editProfilePopup.open();
+  formEditValidate.resetValidation();
   // Предзаполнение формы
   const currentInfoIser = userProfile.getUserInfo();
   editNameInput.value = currentInfoIser.name;
@@ -103,13 +107,13 @@ buttonPopupAdd.addEventListener('click', () => {
 //
 // Создаем новый обьект класса Section
 //
-const CardList = new Section({ 
-  data: initialCards, 
+const cardList = new Section({ 
+  //data: initialCards, 
   renderer: (item) => {
-    CardList.addItem(createCard(item));
+    cardList.addItem(createCard(item));
   }}, '.cards');
 //
-  CardList.renderItems();
+  cardList.renderItems(initialCards);
 //
 // Устанавливаем валидацию полей форм
 //
