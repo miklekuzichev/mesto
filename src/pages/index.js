@@ -1,4 +1,5 @@
 import '../pages/index.css';
+import Api from "../components/Api.js";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import Section from '../components/Section.js';
@@ -120,3 +121,23 @@ const cardList = new Section({
 formEditValidate.enableValidation();
 formAddValidate.enableValidation();
 
+fetch('https://nomoreparties.co/v1/cohort-71/users/me', {
+  headers: {
+    authorization: '4d9ffc72-560d-4507-8006-e62ea753eb8d'
+  }
+})
+  .then(res => res.json())
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((err) => {
+    console.log(`Ошибка ${err}`);
+  }); 
+
+  const api = new Api({
+    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-71',
+    headers: {
+        authorization: '4d9ffc72-560d-4507-8006-e62ea753eb8d',
+      'Content-Type': 'application/json'
+    }
+  });
