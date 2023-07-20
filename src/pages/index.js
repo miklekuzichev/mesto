@@ -120,7 +120,7 @@ const cardList = new Section({
 //
 formEditValidate.enableValidation();
 formAddValidate.enableValidation();
-
+/*
 fetch('https://nomoreparties.co/v1/cohort-71/users/me', {
   headers: {
     authorization: '4d9ffc72-560d-4507-8006-e62ea753eb8d'
@@ -133,11 +133,39 @@ fetch('https://nomoreparties.co/v1/cohort-71/users/me', {
   .catch((err) => {
     console.log(`Ошибка ${err}`);
   }); 
+*/
 
   const api = new Api({
-    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-71',
+    baseUrl: 'https://nomoreparties.co/v1/cohort-71',
     headers: {
         authorization: '4d9ffc72-560d-4507-8006-e62ea753eb8d',
-      'Content-Type': 'application/json'
+        'Content-Type': 'application/json'
     }
   });
+
+  let userId;
+
+// Загрузка готовых карточек и данных о пользователе с сервера
+  Promise.all([api.getInitialCards(), api.getUserInfo()])
+  .then(([initialCards, userData]) => {
+    userProfile.setUserInfo(userData);
+    userId = userData._id;
+    console.log(initialCards);
+    cardList.renderItems(initialCards);
+  })
+  .catch((err) => {
+    console.log(`Ошибка: ${err}`);
+  });
+
+  const test = api.getUserInfo();
+
+  //Promise(api.getUserInfo())
+  //  .then((userData) => {
+  //    console.log(userData)
+  //  })
+  //  .catch((err) => {
+  //    console.log(`Ошибка: ${err}`);
+  //  });
+  
+  console.log(test);
+  //userProfile.setUserInfo(test);

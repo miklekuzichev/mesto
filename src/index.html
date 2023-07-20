@@ -17,7 +17,12 @@
         <main>
             <section class="profile">
                 <div class="profile__card-user">
-                    <img src="<%=require('./images/jak-if-kusto.png')%>" alt="Аватар пользователя" class="profile__avatar">
+                    <button type="button" class="profile__avatar profile__edit-button">
+                        <img src="<%=require('./images/jak-if-kusto.png')%>" alt="Аватар пользователя" class="profile__avatar">
+                    </button>
+
+
+                    
                     <div class="profile__info">
                         <h1 class="profile__title"></h1>
                         <button type="button" class="profile__edit-button">
@@ -70,6 +75,28 @@
                 </form>
             </div>
         </div>
+
+        <div class="popup popup_type_editProfile">
+            <div class="popup__container">
+                <button type="button" class="popup__close"></button>
+                <h2 class="popup__title">Обновить аватар</h2>
+                <form method="GET" name="edit-form" action="#" class='popup__form' novalidate>
+                    <fieldset class="popup__fieldset">
+                        <input type='url' name="imagelink" id="imageLink" placeholder="Ссылка на картинку" class="popup__input popup__input_type_imageurl" required>
+                        <span class="popup__error imageLink-error"></span>
+                        <button type='submit' class="popup__button">
+                            Сохранить
+                        </button>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+
+
+
+
+
+
 
         <div class="popup popup_type_img">
             <div class="popup__container-img">
