@@ -22,20 +22,21 @@ export default class Api {
             .then(res => this._responseServer(res))
     }
   
-    editAvatar() {
-        return fetch(`${this._baseUrl}/cards`, {
+    editAvatar(data) {
+        console.log(`${this._baseUrl}/users/me/avatar`)
+        return fetch(`${this._baseUrl}/users/me/avatar`, {
+            method: 'PATCH',
             headers: this._headers,
-            method: 'POST',
             body: JSON.stringify(
-                {name: data.name,
-                link: data.link
+                {avatar: data.avatar
             })
           })
             .then(res => this._responseServer(res))
-
-
     }
 
+ 
+
+    
     getUserInfo() {
         //console.log(`${this._baseUrl}/users/me`);
         //console.log(this._headers);
@@ -47,7 +48,17 @@ export default class Api {
       }
     
 
-
+      addCard(data) {
+        return fetch(`${this._baseUrl}/cards`, {
+          method: 'POST',
+          headers: this._headers,
+          body: JSON.stringify(
+            {name: data.name,
+             link: data.link
+          })
+        })
+          .then(res => this._parseResponse(res));
+      }
 
 
 
