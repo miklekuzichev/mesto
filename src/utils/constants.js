@@ -34,14 +34,12 @@ const initialCards = [
     errorClass: 'popup__error_visible'
   };
   //
-  const initUser = {name: "Жак-Ив Кусто", profile: "Исследователь океана"};
   const userSelector = { name: '.profile__title', 
-                       profile: '.profile__subtitle' };
+                       about: '.profile__subtitle' };
   //
   export {
     initialCards,
     enableValidation,
-    initUser,
     userSelector
   };
   

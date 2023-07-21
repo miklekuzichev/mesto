@@ -9,28 +9,43 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import {
   initialCards,
   enableValidation,
-  initUser,
   userSelector
 } from '../utils/constants.js';
 //
 //
 //
+
+
+
+
 const popupFormEdit = document.querySelector('.popup_type_edit');
 const popupFormAdd = document.querySelector('.popup_type_add');
+
+
+const popupFormEditAvatar = document.querySelector('.popup_type_edit-profile');
+
+
 const buttonPopupEdit = document.querySelector('.profile__edit-button');
 const editNameInput = document.querySelector('.popup__input_type_name');
 const editJobInput = document.querySelector('.popup__input_type_profile');
 const buttonPopupAdd = document.querySelector('.profile__add-button');
 //
+const buttonPopupAvatarEdit = document.querySelector('.profile__avatar-button');
+const userAvatar = document.querySelector('.profile__avatar');
+
+
+console.log(buttonPopupAvatarEdit);
+//
 // Создаем новые обьекты класса FormValidator
 //
 const formEditValidate = new FormValidator(enableValidation, popupFormEdit);
 const formAddValidate = new FormValidator(enableValidation, popupFormAdd);
+const formEditAvatarValidate = new FormValidator(enableValidation, popupFormEditAvatar);
 //
 // Предзаполнение контента на странице
 //
 const userProfile = new UserInfo(userSelector);
-userProfile.setUserInfo(initUser);
+//userProfile.setUserInfo(initUser);
 //
 // создание попапа с формой редактирования профиля
 //
@@ -53,6 +68,40 @@ const addCardPopup = new PopupWithForm({
 });
 //
 addCardPopup.setEventListeners();
+
+
+
+
+//
+// создание попапа с кнопкой добавления аватара
+//
+const editAvatarPopup = new PopupWithForm({
+  selector: '.popup_type_edit-profile',
+  handleFormSubmit: (data) => {
+    editAvatarPopup.loading(true); // показываем сообщение "Сохранение..."
+    api.editAvatar(data)
+      .then((data) => {
+        userAvatar.src = data.avatar;
+        editAvatarPopup.close();
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      })
+      .finally(() => {
+        editAvatarPopup.loading(false);
+      });
+  }
+  });
+//
+editAvatarPopup.setEventListeners();
+
+
+
+
+
+
+
+
 //
 // Создание экземпляра класса PopupWithImage
 //
@@ -62,7 +111,7 @@ openImagePopup.setEventListeners();
 // Функция - обработчик «отправки» формы редактирования профиля
 //
 function submitEditProfileForm (data) {
-    userProfile.setUserInfo({name: data.username, profile: data.userprofile});
+    userProfile.setUserInfo({name: data.username, about: data.userprofile});
     editProfilePopup.close();
 }
 //
@@ -96,8 +145,23 @@ buttonPopupEdit.addEventListener('click', () => {
   // Предзаполнение формы
   const currentInfoIser = userProfile.getUserInfo();
   editNameInput.value = currentInfoIser.name;
-  editJobInput.value = currentInfoIser.profile;
+  editJobInput.value = currentInfoIser.about;
 });
+
+
+//
+// Добавление слушателя событий для попапа изменения аватара
+//
+buttonPopupAvatarEdit.addEventListener('click', () => {
+  editAvatarPopup.open();
+  //formEditAvatarValidate.resetValidation();
+
+  
+});
+
+
+
+
 //
 // Добавление слушателя событий для попапа добавления новой карточки
 //
@@ -120,6 +184,7 @@ const cardList = new Section({
 //
 formEditValidate.enableValidation();
 formAddValidate.enableValidation();
+formEditAvatarValidate.enableValidation();
 /*
 fetch('https://nomoreparties.co/v1/cohort-71/users/me', {
   headers: {
@@ -143,22 +208,21 @@ fetch('https://nomoreparties.co/v1/cohort-71/users/me', {
     }
   });
 
-  let userId;
+ // let userId;
 
 // Загрузка готовых карточек и данных о пользователе с сервера
   Promise.all([api.getInitialCards(), api.getUserInfo()])
   .then(([initialCards, userData]) => {
     userProfile.setUserInfo(userData);
-    userId = userData._id;
-    console.log(initialCards);
+  //  userId = userData._id;
+    console.log(initialCards);////////////////////////////////////////////////////////////
     cardList.renderItems(initialCards);
   })
   .catch((err) => {
     console.log(`Ошибка: ${err}`);
   });
 
-  const test = api.getUserInfo();
-
+ 
   //Promise(api.getUserInfo())
   //  .then((userData) => {
   //    console.log(userData)
@@ -167,5 +231,5 @@ fetch('https://nomoreparties.co/v1/cohort-71/users/me', {
   //    console.log(`Ошибка: ${err}`);
   //  });
   
-  console.log(test);
+
   //userProfile.setUserInfo(test);

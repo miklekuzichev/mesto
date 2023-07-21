@@ -20,28 +20,21 @@ export default class Api {
             headers: this._headers
           })
             .then(res => this._responseServer(res))
-
     }
   
+    editAvatar() {
+        return fetch(`${this._baseUrl}/cards`, {
+            headers: this._headers,
+            method: 'POST',
+            body: JSON.stringify(
+                {name: data.name,
+                link: data.link
+            })
+          })
+            .then(res => this._responseServer(res))
 
-
-    /*
-    getUserInfo() {
-        fetch('https://nomoreparties.co/v1/cohort-71/users/me', {
-  headers: {
-    authorization: '4d9ffc72-560d-4507-8006-e62ea753eb8d'
-  }
-})
-  .then(res => res.json())
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((err) => {
-    console.log(`Ошибка ${err}`);
-  }); 
 
     }
-*/
 
     getUserInfo() {
         //console.log(`${this._baseUrl}/users/me`);

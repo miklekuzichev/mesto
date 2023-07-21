@@ -2,7 +2,7 @@
 export default class UserInfo {
     constructor( selector ) {
         this._name = document.querySelector(selector.name);
-        this._profile = document.querySelector(selector.profile); 
+        this._profile = document.querySelector(selector.about); 
         this._userData = {};
     }
 //

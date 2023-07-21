@@ -9,6 +9,9 @@ export default class PopupWithForm extends Popup {
         this._form = this._popup.querySelector('.popup__form');
         this._inputList = this._form.querySelectorAll('.popup__input');
         this._handleFormSubmit = handleFormSubmit;
+
+        this._submitBtn = this._popupForm.querySelector('.submit');
+        this._submitBtnText = this._submitBtn.textContent;
       }
       //
       // Приватный метод сбора данных всех полей формы
@@ -36,6 +39,16 @@ export default class PopupWithForm extends Popup {
             evt.preventDefault();
           this._handleFormSubmit(this._getInputValues());
         })
+      }
+      //
+      //
+      //
+      loading(isLoading) {
+        if (isLoading) {
+          this._submitBtn.textContent = 'Сохранение...'
+        } else {
+          this._submitBtn.textContent = this._submitBtnText;
+        }
       }
       //
       //
