@@ -42,7 +42,7 @@ generateCard() {
 //
 // Функция удаления карочки из index.html
 //
-_deleteCard() {
+deleteCard() {
   this._element.remove();
   this._element = null;
 }

@@ -6,6 +6,7 @@ import Section from '../components/Section.js';
 import UserInfo from '../components/UserInfo.js';
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
+import PopupWithConfirm from "../components/PopupWithConfirm.js"
 import {
   enableValidation,
   userSelector
@@ -116,7 +117,11 @@ const addCardPopup = new PopupWithForm({
 //
 addCardPopup.setEventListeners();
 
-
+// создаем попап подтверждения удаления
+const deleteCard = new PopupWithConfirm({
+  popupSelector: '.popup_type_delete'
+});
+deleteCard.setEventListeners();
 
 
 //
@@ -174,12 +179,12 @@ const createCard = (data) => {
     handleCardClick: (name, link) => {
       openImagePopup.open(name, link);
     },
-    _handleCardDelete: (cardId) => {
-      deleteCardPopup.open();
-      deleteCardPopup.submitCallback(() => {
+    handleCardDelete: (cardId) => {
+      deleteCard.open();
+      deleteCard.submitCallback(() => {
         api.deleteCard(cardId)
           .then(() => {
-            deleteCardPopup.close();
+            deleteCard.close();
             card.deleteCard();
           })
           .catch((err) => {
