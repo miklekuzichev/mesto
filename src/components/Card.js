@@ -2,10 +2,11 @@
 // Класс добавления новой карочки в index.html
 //
 export default class Card {
-  constructor({ cardData, cardTemplate, userId, cardId, handleCardClick, handleCardDelete }) {
+  constructor({ cardData, cardTemplate, userId, handleCardClick, handleCardDelete }) {
     this._name = cardData.name;
     this._link = cardData.link;
     this._cardId = cardData._id;
+    this._cardOwnerId = cardData.owner._id;
     this._cardTemplate = cardTemplate;
     this._userId = userId;
     this._handleCardClick = handleCardClick;
@@ -35,6 +36,7 @@ generateCard() {
   this._userElementCardImage.src = this._link;
   this._element.querySelector('.card__text').textContent = this._name;
   this._eventOpenImg = this._element.querySelector('.card__open-image');
+  this._deleteButton();
   this._setEventListeners();
   //
   return this._element;
@@ -47,6 +49,12 @@ deleteCard() {
   this._element = null;
 }
 //
+
+_deleteButton() {
+  if (this._userId !== this._cardOwnerId) {
+    this._eventDeleteButton.remove();
+  }
+}
 
 _isSetLike() {
 
