@@ -2,11 +2,14 @@
 // Класс добавления новой карочки в index.html
 //
 export default class Card {
-  constructor({ cardData, cardTemplate, handleCardClick }) {
+  constructor({ cardData, cardTemplate, userId, cardId, handleCardClick, handleCardDelete }) {
     this._name = cardData.name;
     this._link = cardData.link;
+    this._cardId = cardData._id;
     this._cardTemplate = cardTemplate;
+    this._userId = userId;
     this._handleCardClick = handleCardClick;
+    this._handleCardDelete = handleCardDelete;
   }
 //
 // получение разметки template
@@ -39,10 +42,19 @@ generateCard() {
 //
 // Функция удаления карочки из index.html
 //
-_deleteCard () {
+_deleteCard() {
   this._element.remove();
   this._element = null;
 }
+//
+
+_isSetLike() {
+
+  
+}
+
+
+
 //
 // Функция заменяет картинку сердечка при нажатии на него
 //
@@ -57,9 +69,12 @@ _makeLike() {
     this._userElementCardImage.addEventListener('click', () => {
       this._handleCardClick(this._name, this._link);
     })
+
+
     // слушатель кнопки удаления карточки
     this._eventDeleteButton.addEventListener('click', () => {
-      this._deleteCard();
+      //this._deleteCard();
+      this._handleCardDelete(this._cardId);
     })
     // слушатель кнопки лайк
     this._eventActiveLike.addEventListener('click', () => {
