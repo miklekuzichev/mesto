@@ -1,3 +1,6 @@
+//
+// Класс создания попапа
+//
 export default class Popup {
     constructor(selector) {
       this._popup = document.querySelector(selector);
@@ -40,3 +43,6 @@ export default class Popup {
           });
       }
   }
+//
+//
+//

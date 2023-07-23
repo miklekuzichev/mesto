@@ -1,27 +1,33 @@
+//
+// Класс взаимодействия с сервером
+//
 export default class Api {
     constructor(options) {
       this._baseUrl = options.baseUrl;
       this._headers = options.headers;
     }
-  
-
-
+//
+// Метод проверки ответа сервера
+//
     _responseServer(res) {
-        //console.log(res.json())
         if(res.ok) {
             return res.json();
         } else {
             return Promise.reject(`Ошибка: ${res.status}`);
         }
     }
-
+//
+// Метод получения картинок с сервера
+//
     getInitialCards() {
         return fetch(`${this._baseUrl}/cards`, {
             headers: this._headers
           })
             .then(res => this._responseServer(res))
     }
-  
+//
+// Метод изменения аватара пользователя
+//  
     editAvatar(data) {
         return fetch(`${this._baseUrl}/users/me/avatar`, {
             method: 'PATCH',
@@ -32,20 +38,19 @@ export default class Api {
           })
             .then(res => this._responseServer(res))
     }
-
- 
+//
+// Метод получения информации о пользователе
+//
     getUserInfo() {
-        //console.log(`${this._baseUrl}/users/me`);
-        //console.log(this._headers);
         return fetch(`${this._baseUrl}/users/me`, {
           headers: this._headers
         })
           .then(res => this._responseServer(res))
-          //.then(res => console.log(res.json));
       }
-    
-
-      addCard(data) {
+ //
+ // Метод загрузки новой карточки на сервер
+ //   
+    addCard(data) {
         return fetch(`${this._baseUrl}/cards`, {
           method: 'POST',
           headers: this._headers,
@@ -55,9 +60,11 @@ export default class Api {
           })
         })
           .then(res => this._responseServer(res));
-      }
-
-      editUserInfo(data) {
+    }
+//
+// Метод Изменения информации о пользователе
+//
+    editUserInfo(data) {
         return fetch(`${this._baseUrl}/users/me`, {
           method: 'PATCH',
           headers: this._headers,
@@ -67,39 +74,38 @@ export default class Api {
           })
         })
           .then(res => this._responseServer(res));
-      }
-
-
-
-
-
-      //
-      deleteCard(cardId) {
+    }
+//
+// Метод удаления карточки с сервера
+//
+    deleteCard(cardId) {
         return fetch(`${this._baseUrl}/cards/${cardId}`, {
           method: 'DELETE',
           headers: this._headers
         })
           .then(res => this._responseServer(res));
-      }
-    
-      //
-      makeLike(cardId) {
+    }
+//
+// Метод установки лайка
+//
+    makeLike(cardId) {
         return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
           method: 'PUT',
           headers: this._headers
         })
           .then(res => this._responseServer(res));
-      }
-
-      deleteLike(cardId) {
+    }
+//
+// Метод удаления лайка
+//
+    deleteLike(cardId) {
         return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
           method: 'DELETE',
           headers: this._headers
         })
           .then(res => this._responseServer(res));
-      }
-
-
+    }
   }
-  
-  
+//
+//
+//

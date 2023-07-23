@@ -1,4 +1,6 @@
-
+//
+// Класс установки и отрисовки информации о пользователе
+//
 export default class UserInfo {
     constructor( selector ) {
         this._name = document.querySelector(selector.name);
@@ -7,7 +9,7 @@ export default class UserInfo {
         this._userData = {};
     }
 //
-//
+// Метод установки данных пользователя
 //
     setUserInfo(userData) {
         this._userData = userData;
@@ -16,7 +18,7 @@ export default class UserInfo {
         this._avatar.src = userData.avatar;
     }
 //
-//
+// Метод получения данных пользоателя
 //
     getUserInfo() {
         return this._userData;

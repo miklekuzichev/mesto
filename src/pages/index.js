@@ -9,10 +9,10 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithConfirm from "../components/PopupWithConfirm.js"
 import {
   enableValidation,
-  userSelector
+  userSelector,
+  baseUrl,
+  authorization
 } from '../utils/constants.js';
-//
-//
 //
 const popupFormEdit = document.querySelector('.popup_type_edit');
 const popupFormAdd = document.querySelector('.popup_type_add');
@@ -26,52 +26,44 @@ const buttonPopupAvatarEdit = document.querySelector('.profile__avatar-button');
 const userAvatar = document.querySelector('.profile__avatar');
 let userId;
 //
-//console.log(userAvatar);
-//
 // Создаем новые обьекты класса FormValidator
 //
 const formEditValidate = new FormValidator(enableValidation, popupFormEdit);
 const formAddValidate = new FormValidator(enableValidation, popupFormAdd);
 const formEditAvatarValidate = new FormValidator(enableValidation, popupFormEditAvatar);
 //
-// Предзаполнение контента на странице
+// Создаем экземпляр класса UserInfo
 //
 const userProfile = new UserInfo(userSelector);
-//userProfile.setUserInfo(initUser);
-
+//
+// Создаем экземпляр класса Api
+//
 const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-71',
+  baseUrl: baseUrl,
   headers: {
-      authorization: '4d9ffc72-560d-4507-8006-e62ea753eb8d',
+      authorization: authorization,
       'Content-Type': 'application/json'
   }
 });
-
+//
 // Загрузка готовых карточек и данных о пользователе с сервера
+//
 Promise.all([api.getInitialCards(), api.getUserInfo()])
 .then(([initialCards, userData]) => {
   userProfile.setUserInfo(userData);
- // console.log('userData ', userData);
   userId = userData._id;
   cardList.renderItems(initialCards);
 })
 .catch((err) => {
   console.log(`Ошибка: ${err}`);
 });
-
-
-
-
-
-
 //
-// создание попапа с формой редактирования профиля
+// Создание попапа редактирования профиля
 //
 const editProfilePopup = new PopupWithForm({
   selector: '.popup_type_edit',
   handleFormSubmit: (data) => {
-    //submitEditProfileForm(data);
-    editProfilePopup.load(true);
+    editProfilePopup.load(true); // показываем сообщение "Сохранение..."
     api.editUserInfo(data)
       .then((data) => {
         userProfile.setUserInfo(data);
@@ -83,9 +75,6 @@ const editProfilePopup = new PopupWithForm({
       .finally(() => {
         editProfilePopup.load(false);
       });
-
-
-
   }
 });
 //
@@ -96,13 +85,9 @@ editProfilePopup.setEventListeners();
 const addCardPopup = new PopupWithForm({
   selector: '.popup_type_add',
   handleFormSubmit: (data) => {
-    //submitImageForm(data);
-
     addCardPopup.load(true); // показываем сообщение "Сохранение..."
     api.addCard(data)
       .then((data) => {
-        //userAvatar.src = data.avatar;
-        
         cardList.addItem(createCard(data));
         addCardPopup.close();
       })
@@ -116,22 +101,20 @@ const addCardPopup = new PopupWithForm({
 });
 //
 addCardPopup.setEventListeners();
-
-// создаем попап подтверждения удаления
+//
+// Создаем попап подтверждения удаления
+//
 const deleteCard = new PopupWithConfirm({
   popupSelector: '.popup_type_delete'
 });
+//
 deleteCard.setEventListeners();
-
-
 //
-// создание попапа с кнопкой добавления аватара
+// Создаем попап с кнопкой добавления аватара
 //
-
 const editAvatarPopup = new PopupWithForm({
   selector: '.popup_type_edit-profile',
   handleFormSubmit: (data) => {
-    
     editAvatarPopup.load(true); // показываем сообщение "Сохранение..."
     api.editAvatar(data)
       .then((data) => {
@@ -148,26 +131,11 @@ const editAvatarPopup = new PopupWithForm({
   });
 //
 editAvatarPopup.setEventListeners();
-
-
-
-
-
-
-
-
 //
-// Создание экземпляра класса PopupWithImage
+// Созданием экземпляр класса PopupWithImage
 //
 const openImagePopup = new PopupWithImage('.popup_type_img');
 openImagePopup.setEventListeners();
-//
-// Функция - обработчик «отправки» формы редактирования профиля
-//
-//function submitEditProfileForm (data) {
-//    userProfile.setUserInfo({name: data.username, about: data.userprofile});
-//    editProfilePopup.close();
-//}
 //
 // Функция генерации карточки
 //
@@ -181,7 +149,7 @@ const createCard = (data) => {
     },
     cardDelete: (cardId) => {
       deleteCard.open();
-      deleteCard.submitCallback(() => {
+      deleteCard.submitMethod(() => {
         api.deleteCard(cardId)
           .then(() => {
             deleteCard.close();
@@ -201,7 +169,6 @@ const createCard = (data) => {
           console.log(`Ошибка: ${err}`);
         });
     },
-
     removeLike: (cardId) => {
       api.deleteLike(cardId)
         .then((data) => {
@@ -211,19 +178,10 @@ const createCard = (data) => {
           console.log(`Ошибка: ${err}`);
         });
     }
-
   });
   const cardElement = card.generateCard();
   return cardElement
 }
-//
-// Функция - обработчик «отправки» формы добавления новой карточки
-//
-//function submitImageForm (data) {
-//  cardList.addItem(createCard({name: data.imagename, link: data.imagelink}));
-//  addCardPopup.close();
-//  formAddValidate.resetValidation();
-//}
 //
 // Добавление слушателя событий для попапа редактирования данных профиля
 //
@@ -235,21 +193,13 @@ buttonPopupEdit.addEventListener('click', () => {
   editJobInput.value = currentInfoIser.about;
   editProfilePopup.open();
 });
-
-
 //
 // Добавление слушателя событий для попапа изменения аватара
 //
 buttonPopupAvatarEdit.addEventListener('click', () => {
   editAvatarPopup.open();
   formEditAvatarValidate.resetValidation();
-
-  
 });
-
-
-
-
 //
 // Добавление слушателя событий для попапа добавления новой карточки
 //
@@ -261,43 +211,13 @@ buttonPopupAdd.addEventListener('click', () => {
 // Создаем новый обьект класса Section
 //
 const cardList = new Section({ 
-  //data: initialCards, 
   renderer: (item) => {
     cardList.addItem(createCard(item));
   }}, '.cards');
-//
-//  cardList.renderItems(initialCards);
 //
 // Устанавливаем валидацию полей форм
 //
 formEditValidate.enableValidation();
 formAddValidate.enableValidation();
 formEditAvatarValidate.enableValidation();
-/*
-fetch('https://nomoreparties.co/v1/cohort-71/users/me', {
-  headers: {
-    authorization: '4d9ffc72-560d-4507-8006-e62ea753eb8d'
-  }
-})
-  .then(res => res.json())
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((err) => {
-    console.log(`Ошибка ${err}`);
-  }); 
-*/
-
-
-
- 
-  //Promise(api.getUserInfo())
-  //  .then((userData) => {
-  //    console.log(userData)
-  //  })
-  //  .catch((err) => {
-  //    console.log(`Ошибка: ${err}`);
-  //  });
-  
-
-  //userProfile.setUserInfo(test);
+//

@@ -16,7 +16,7 @@ export default class Card {
     this._removeLike = removeLike;
   }
 //
-// получение разметки template
+// Метод получения разметки template
 //
 _getTemplate() {
   const cardElement = document
@@ -28,7 +28,7 @@ _getTemplate() {
   return cardElement;
 }
 //
-//
+// Метод создания экземпляра карточки
 //
 generateCard() {
   this._element = this._getTemplate();
@@ -48,21 +48,22 @@ generateCard() {
   return this._element;
 }
 //
-// Функция удаления карочки из index.html
+// Метод удаления карочки из index.html
 //
 deleteCard() {
   this._element.remove();
   this._element = null;
 }
 //
-
+// Метод переключения иконки удаления карточки 
+//
 _deleteButton() {
   if (this._userId !== this._cardOwnerId) {
     this._eventDeleteButton.remove();
   }
 }
 //
-// Функция заменяет картинку сердечка при нажатии на него и проверяет установку лайка карточке
+// Метод заменяет картинку сердечка при нажатии на него и проверяет установку лайка карточке
 //
 _isSetLike() {
   if (this._likes.some((user) => { // проверяем элементы массива по условию переданной функции
@@ -72,7 +73,7 @@ _isSetLike() {
   }
 }
 //
-// Установить/снять лайк
+// Метод переключения лайка
 // 
 makeLike(item) {
   this._eventActiveLike.classList.toggle('card__heart-button-active');
@@ -80,23 +81,19 @@ makeLike(item) {
   this._likesCount.textContent = this._likes.length; 
 }
 //
-// Устанавливаем слушатели на карточку
+// Метод установки слушателей на карточку
 // 
   _setEventListeners() {
     // открытие попапа просмотра изображения кликом по изображению
     this._userElementCardImage.addEventListener('click', () => {
       this._cardClick(this._name, this._link);
     })
-
-
     // слушатель кнопки удаления карточки
     this._eventDeleteButton.addEventListener('click', () => {
-      //this._deleteCard();
       this._cardDelete(this._cardId);
     })
     // слушатель кнопки лайк
     this._eventActiveLike.addEventListener('click', () => {
-        //this._makeLike();
         if (this._eventActiveLike.classList.contains('card__heart-button-active')) {
           this._removeLike(this._cardId);
         } else {
@@ -105,3 +102,6 @@ makeLike(item) {
     })
   }
 }
+//
+//
+//
