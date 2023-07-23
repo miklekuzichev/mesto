@@ -91,7 +91,13 @@ export default class Api {
           .then(res => this._responseServer(res));
       }
 
-
+      deleteLike(cardId) {
+        return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+          method: 'DELETE',
+          headers: this._headers
+        })
+          .then(res => this._responseServer(res));
+      }
 
 
   }

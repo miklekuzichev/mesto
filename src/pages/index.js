@@ -176,10 +176,10 @@ const createCard = (data) => {
     cardData: data, 
     cardTemplate: '#card-template',
     userId: userId, 
-    handleCardClick: (name, link) => {
+    cardClick: (name, link) => {
       openImagePopup.open(name, link);
     },
-    handleCardDelete: (cardId) => {
+    cardDelete: (cardId) => {
       deleteCard.open();
       deleteCard.submitCallback(() => {
         api.deleteCard(cardId)
@@ -191,9 +191,27 @@ const createCard = (data) => {
             console.log(`Ошибка: ${err}`);
           });
       });
+    },
+    setLike: (cardId) => {
+      api.makeLike(cardId)
+        .then((data) => {
+          card.makeLike(data);
+        })
+        .catch((err) => {
+          console.log(`Ошибка: ${err}`);
+        });
+    },
+
+    removeLike: (cardId) => {
+      api.deleteLike(cardId)
+        .then((data) => {
+          card.makeLike(data);
+        })
+        .catch((err) => {
+          console.log(`Ошибка: ${err}`);
+        });
     }
 
-    
   });
   const cardElement = card.generateCard();
   return cardElement
