@@ -9,7 +9,7 @@ export default class Api {
 //
 // Метод проверки ответа сервера
 //
-    _responseServer(res) {
+    _checkResponse(res) {
         if(res.ok) {
             return res.json();
         } else {
@@ -23,7 +23,7 @@ export default class Api {
         return fetch(`${this._baseUrl}/cards`, {
             headers: this._headers
           })
-            .then(res => this._responseServer(res))
+            .then(res => this._checkResponse(res))
     }
 //
 // Метод изменения аватара пользователя
@@ -36,7 +36,7 @@ export default class Api {
                 {avatar: data.imagelink
             })
           })
-            .then(res => this._responseServer(res))
+            .then(res => this._checkResponse(res))
     }
 //
 // Метод получения информации о пользователе
@@ -45,7 +45,7 @@ export default class Api {
         return fetch(`${this._baseUrl}/users/me`, {
           headers: this._headers
         })
-          .then(res => this._responseServer(res))
+          .then(res => this._checkResponse(res))
       }
  //
  // Метод загрузки новой карточки на сервер
@@ -59,7 +59,7 @@ export default class Api {
              link: data.imagelink
           })
         })
-          .then(res => this._responseServer(res));
+          .then(res => this._checkResponse(res));
     }
 //
 // Метод Изменения информации о пользователе
@@ -73,7 +73,7 @@ export default class Api {
              about: data.userprofile
           })
         })
-          .then(res => this._responseServer(res));
+          .then(res => this._checkResponse(res));
     }
 //
 // Метод удаления карточки с сервера
@@ -83,7 +83,7 @@ export default class Api {
           method: 'DELETE',
           headers: this._headers
         })
-          .then(res => this._responseServer(res));
+          .then(res => this._checkResponse(res));
     }
 //
 // Метод установки лайка
@@ -93,7 +93,7 @@ export default class Api {
           method: 'PUT',
           headers: this._headers
         })
-          .then(res => this._responseServer(res));
+          .then(res => this._checkResponse(res));
     }
 //
 // Метод удаления лайка
@@ -103,7 +103,7 @@ export default class Api {
           method: 'DELETE',
           headers: this._headers
         })
-          .then(res => this._responseServer(res));
+          .then(res => this._checkResponse(res));
     }
   }
 //

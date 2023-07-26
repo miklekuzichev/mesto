@@ -6,6 +6,7 @@ export default class UserInfo {
         this._name = document.querySelector(selector.name);
         this._profile = document.querySelector(selector.about);
         this._avatar = document.querySelector(selector.avatar);
+        this._userId = 0;
         this._userData = {};
     }
 //
@@ -16,6 +17,7 @@ export default class UserInfo {
         this._name.textContent = userData.name;
         this._profile.textContent = userData.about;
         this._avatar.src = userData.avatar;
+        this._userId = userData._id;
     }
 //
 // Метод получения данных пользоателя

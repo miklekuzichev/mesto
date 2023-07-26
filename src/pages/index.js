@@ -24,7 +24,6 @@ const buttonPopupAdd = document.querySelector('.profile__add-button');
 //
 const buttonPopupAvatarEdit = document.querySelector('.profile__avatar-button');
 const userAvatar = document.querySelector('.profile__avatar');
-let userId;
 //
 // Создаем новые обьекты класса FormValidator
 //
@@ -51,7 +50,6 @@ const api = new Api({
 Promise.all([api.getInitialCards(), api.getUserInfo()])
 .then(([initialCards, userData]) => {
   userProfile.setUserInfo(userData);
-  userId = userData._id;
   cardList.renderItems(initialCards);
 })
 .catch((err) => {
@@ -143,17 +141,17 @@ const createCard = (data) => {
   const card = new Card( {
     cardData: data, 
     cardTemplate: '#card-template',
-    userId: userId, 
-    cardClick: (name, link) => {
+    userId: userProfile.getUserInfo()._id, 
+    clickCard: (name, link) => {
       openImagePopup.open(name, link);
     },
-    cardDelete: (cardId) => {
+    removeCard: (cardId) => {
       deleteCard.open();
       deleteCard.submitMethod(() => {
         api.deleteCard(cardId)
           .then(() => {
             deleteCard.close();
-            card.deleteCard();
+            card.removeCard(); 
           })
           .catch((err) => {
             console.log(`Ошибка: ${err}`);

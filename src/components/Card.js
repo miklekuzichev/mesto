@@ -2,7 +2,7 @@
 // Класс добавления новой карочки в index.html
 //
 export default class Card {
-  constructor({ cardData, cardTemplate, userId, cardClick, cardDelete, setLike, removeLike }) {
+  constructor({ cardData, cardTemplate, userId, clickCard, removeCard, setLike, removeLike }) {
     this._name = cardData.name;
     this._link = cardData.link;
     this._cardId = cardData._id;
@@ -10,8 +10,8 @@ export default class Card {
     this._cardOwnerId = cardData.owner._id;
     this._cardTemplate = cardTemplate;
     this._userId = userId;
-    this._cardClick = cardClick;
-    this._cardDelete = cardDelete;
+    this._clickCard = clickCard;
+    this._removeCard = removeCard;
     this._setLike = setLike;
     this._removeLike = removeLike;
   }
@@ -50,7 +50,7 @@ generateCard() {
 //
 // Метод удаления карочки из index.html
 //
-deleteCard() {
+removeCard() { 
   this._element.remove();
   this._element = null;
 }
@@ -86,11 +86,11 @@ makeLike(item) {
   _setEventListeners() {
     // открытие попапа просмотра изображения кликом по изображению
     this._userElementCardImage.addEventListener('click', () => {
-      this._cardClick(this._name, this._link);
+      this._clickCard(this._name, this._link);
     })
     // слушатель кнопки удаления карточки
     this._eventDeleteButton.addEventListener('click', () => {
-      this._cardDelete(this._cardId);
+      this._removeCard(this._cardId);
     })
     // слушатель кнопки лайк
     this._eventActiveLike.addEventListener('click', () => {
