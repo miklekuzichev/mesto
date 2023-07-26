@@ -42,9 +42,9 @@ export default class PopupWithForm extends Popup {
 //
 // Публичный метод показа статуса загрузки на сервер
 //
-    load(isLoad) {
+    load(isLoad, textMessage) {
         if (isLoad) {
-          this._buttonSubmit.textContent = 'Сохранение...'
+          this._buttonSubmit.textContent = textMessage;//'Сохранение...'
         } else {
           this._buttonSubmit.textContent = this._buttonSubmitText;
         }

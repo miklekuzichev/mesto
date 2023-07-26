@@ -56,46 +56,57 @@ Promise.all([api.getInitialCards(), api.getUserInfo()])
   console.log(`Ошибка: ${err}`);
 });
 //
+// Функция отображения ошибок и отображения текста кнопки сабмита 
+//
+function handleSubmit(request, popupInstance, loadingText = "Сохранение...") {
+  // изменяем текст кнопки до вызова запроса
+  popupInstance.load(true, loadingText);
+  request()
+    .then(() => {
+  // закрывать попап нужно только в `then`
+      popupInstance.close()
+    })
+    .catch((err) => {
+  // в каждом запросе нужно ловить ошибку
+      console.error(`Ошибка: ${err}`);
+    })
+  // в каждом запросе в `finally` нужно возвращать обратно начальный текст кнопки
+    .finally(() => {
+      popupInstance.load(false);
+    });
+}
+//
 // Создание попапа редактирования профиля
 //
 const editProfilePopup = new PopupWithForm({
   selector: '.popup_type_edit',
   handleFormSubmit: (data) => {
-    editProfilePopup.load(true); // показываем сообщение "Сохранение..."
-    api.editUserInfo(data)
-      .then((data) => {
-        userProfile.setUserInfo(data);
-        editProfilePopup.close();
-      })
-      .catch((err) => {
-        console.log(`Ошибка: ${err}`);
-      })
-      .finally(() => {
-        editProfilePopup.load(false);
+    function makeRequest() {
+    // `return` позволяет потом дальше продолжать цепочку `then, catch, finally`
+      return api.editUserInfo(data).then((data) => {
+        userProfile.setUserInfo(data)
       });
-  }
+    }
+    handleSubmit(makeRequest, editProfilePopup);
+}
 });
 //
 editProfilePopup.setEventListeners();
 //
 // создание попапа с кнопкой добавления карточки
 //
+
 const addCardPopup = new PopupWithForm({
   selector: '.popup_type_add',
   handleFormSubmit: (data) => {
-    addCardPopup.load(true); // показываем сообщение "Сохранение..."
-    api.addCard(data)
-      .then((data) => {
-        cardList.addItem(createCard(data));
-        addCardPopup.close();
-      })
-      .catch((err) => {
-        console.log(`Ошибка: ${err}`);
-      })
-      .finally(() => {
-        addCardPopup.load(false);
+    function makeRequest() {
+      return api.addCard(data)
+        .then((data) => {
+          cardList.addItem(createCard(data));
       });
-  }
+    }
+    handleSubmit(makeRequest, addCardPopup);
+}
 });
 //
 addCardPopup.setEventListeners();
@@ -113,20 +124,15 @@ deleteCard.setEventListeners();
 const editAvatarPopup = new PopupWithForm({
   selector: '.popup_type_edit-profile',
   handleFormSubmit: (data) => {
-    editAvatarPopup.load(true); // показываем сообщение "Сохранение..."
-    api.editAvatar(data)
-      .then((data) => {
-        userAvatar.src = data.avatar;
-        editAvatarPopup.close();
-      })
-      .catch((err) => {
-        console.log(`Ошибка: ${err}`);
-      })
-      .finally(() => {
-        editAvatarPopup.load(false);
+    function makeRequest() {
+      return api.editAvatar(data)
+        .then((data) => {
+          userAvatar.src = data.avatar;
       });
-  }
-  });
+    }
+    handleSubmit(makeRequest, editAvatarPopup);
+}
+});
 //
 editAvatarPopup.setEventListeners();
 //
