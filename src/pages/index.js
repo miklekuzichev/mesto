@@ -95,7 +95,6 @@ editProfilePopup.setEventListeners();
 //
 // создание попапа с кнопкой добавления карточки
 //
-
 const addCardPopup = new PopupWithForm({
   selector: '.popup_type_add',
   handleFormSubmit: (data) => {
@@ -127,7 +126,8 @@ const editAvatarPopup = new PopupWithForm({
     function makeRequest() {
       return api.editAvatar(data)
         .then((data) => {
-          userAvatar.src = data.avatar;
+          userProfile.setUserInfo(data);
+          userAvatar.src = userProfile.getUserInfo().avatar;
       });
     }
     handleSubmit(makeRequest, editAvatarPopup);
