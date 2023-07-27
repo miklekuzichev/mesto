@@ -39,7 +39,7 @@ generateCard() {
   this._userElementCardImage.src = this._link;
   this._element.querySelector('.card__text').textContent = this._name;
   this._eventOpenImg = this._element.querySelector('.card__open-image');
-  this._deleteButton(); // проверяем, принадлежит ли картояка текущему юзеру и если да, то показываем кнопку удаления карточки
+  this._deleteButton(); // проверяем, принадлежит ли карточка текущему юзеру и если да, то показываем кнопку удаления карточки
   this._setEventListeners();
   this._isSetLike();
   this._likesCount = this._element.querySelector('.card__heart-counter');
