@@ -24,7 +24,6 @@ const editJobInput = document.querySelector('.popup__input_type_profile');
 const buttonPopupAdd = document.querySelector('.profile__add-button');
 //
 const buttonPopupAvatarEdit = document.querySelector('.profile__avatar-button');
-const userAvatar = document.querySelector('.profile__avatar');
 //
 // Создаем новые обьекты класса FormValidator
 //
@@ -53,31 +52,7 @@ Promise.all([api.getInitialCards(), api.getUserInfo()])
   userProfile.setUserInfo(userData);
   cardList.renderItems(initialCards);
 })
-.catch(console.error
-  //(err) => {
-  //console.log(`Ошибка: ${err}`);}
-);
-//
-// Функция отображения ошибок и отображения текста кнопки сабмита 
-//
-/*function handleSubmit(request, popupInstance, loadingText = "Сохранение...") {
-  // изменяем текст кнопки до вызова запроса
-  popupInstance.load(true, loadingText);
-  request()
-    .then(() => {
-  // закрывать попап нужно только в `then`
-      popupInstance.close()
-    })
-    .catch(console.error
-      //(err) => {
-  // в каждом запросе ловим ошибку
-      //console.error(`Ошибка: ${err}`);}
-    )
-  // в каждом запросе в `finally` нужно возвращать обратно начальный текст кнопки
-    .finally(() => {
-      popupInstance.load(false);
-    });
-}*/
+.catch(console.error);
 //
 // Создание попапа редактирования профиля
 //
@@ -129,10 +104,7 @@ const editAvatarPopup = new PopupWithForm({
     function makeRequest() {
       return api.editAvatar(data)
         .then((data) => {
-          userProfile.setUserInfo(data);
-          //userAvatar.src = userProfile.getUserInfo().avatar;
-          userAvatar.src = userProfile.avatar;
-          
+          userProfile.setUserInfo(data);    
       });
     }
     handleSubmit(makeRequest, editAvatarPopup);
@@ -164,11 +136,7 @@ const createCard = (data) => {
             deleteCard.close();
             card.removeCard(); 
           })
-          .catch(console.error
-            //(err) => {
-            //console.log(`Ошибка: ${err}`);
-            //}
-          );
+          .catch(console.error);
       });
     },
     setLike: (cardId) => {
@@ -176,21 +144,14 @@ const createCard = (data) => {
         .then((data) => {
           card.makeLike(data);
         })
-        .catch(console.error
-          //(err) => {
-          //console.log(`Ошибка: ${err}`);}
-        );
+        .catch(console.error);
     },
     removeLike: (cardId) => {
       api.deleteLike(cardId)
         .then((data) => {
           card.makeLike(data);
         })
-        .catch(
-          console.error
-          //(err) => {
-          //console.log(`Ошибка: ${err}`);}
-        );
+        .catch(console.error);
     }
   });
   const cardElement = card.generateCard();
