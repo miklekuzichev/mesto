@@ -12,12 +12,12 @@ export default class UserInfo {
 //
 // Метод установки данных пользователя
 //
-    setUserInfo(userData) {
-        this._userData = userData;
-        this._name.textContent = userData.name;
-        this._profile.textContent = userData.about;
-        this._avatar.src = userData.avatar;
-        this._userId = userData._id;
+    setUserInfo({ name, about, avatar, _id }) {
+        this._userData = { name, about, avatar, _id };
+        this._name.textContent = name;
+        this._profile.textContent = about;
+        this._avatar.src = avatar;
+        this._userId = _id;
     }
 //
 // Метод получения данных пользоателя
