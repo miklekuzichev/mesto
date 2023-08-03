@@ -1,5 +1,5 @@
   //
-  const enableValidation = {
+  const config = {
     formSelector: '.popup__form',
     inputSelector: '.popup__input',
     submitButtonSelector: '.popup__button',
@@ -16,7 +16,7 @@
   const authorization = '4d9ffc72-560d-4507-8006-e62ea753eb8d';
 //
   export {
-    enableValidation,
+    config,
     userSelector,
     baseUrl,
     authorization

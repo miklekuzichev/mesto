@@ -8,16 +8,13 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithConfirm from "../components/PopupWithConfirm.js"
 import {
-  enableValidation,
+  config,
   userSelector,
   baseUrl,
   authorization
 } from '../utils/constants.js';
 import handleSubmit from '../utils/utils.js';
 //
-const popupFormEdit = document.querySelector('.popup_type_edit');
-const popupFormAdd = document.querySelector('.popup_type_add');
-const popupFormEditAvatar = document.querySelector('.popup_type_edit-profile');
 const buttonPopupEdit = document.querySelector('.profile__edit-button');
 const editNameInput = document.querySelector('.popup__input_type_name');
 const editJobInput = document.querySelector('.popup__input_type_profile');
@@ -25,11 +22,24 @@ const buttonPopupAdd = document.querySelector('.profile__add-button');
 //
 const buttonPopupAvatarEdit = document.querySelector('.profile__avatar-button');
 //
-// Создаем новые обьекты класса FormValidator
+// Устанавливаем валидацию полей форм
 //
-const formEditValidate = new FormValidator(enableValidation, popupFormEdit);
-const formAddValidate = new FormValidator(enableValidation, popupFormAdd);
-const formEditAvatarValidate = new FormValidator(enableValidation, popupFormEditAvatar);
+const formValidators = {}
+//
+const enableValidation = (config) => {
+  const formList = Array.from(document.querySelectorAll(config.formSelector))
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(config, formElement)
+// получаем данные из атрибута `name` у формы
+    const formName = formElement.getAttribute('name')
+
+   // вот тут в объект записываем под именем формы
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+};
+//
+enableValidation(config);
 //
 // Создаем экземпляр класса UserInfo
 //
@@ -161,7 +171,7 @@ const createCard = (data) => {
 // Добавление слушателя событий для попапа редактирования данных профиля
 //
 buttonPopupEdit.addEventListener('click', () => {
-  formEditValidate.resetValidation();
+  formValidators['edit-form'].resetValidation();
   // Предзаполнение формы
   const currentInfoIser = userProfile.getUserInfo();
   editNameInput.value = currentInfoIser.name;
@@ -173,14 +183,14 @@ buttonPopupEdit.addEventListener('click', () => {
 //
 buttonPopupAvatarEdit.addEventListener('click', () => {
   editAvatarPopup.open();
-  formEditAvatarValidate.resetValidation();
+  formValidators['update-avatar-form'].resetValidation();
 });
 //
 // Добавление слушателя событий для попапа добавления новой карточки
 //
 buttonPopupAdd.addEventListener('click', () => {
   addCardPopup.open();
-  formAddValidate.resetValidation();
+  formValidators['new-card-form'].resetValidation();
 });
 //
 // Создаем новый обьект класса Section
@@ -191,8 +201,4 @@ const cardList = new Section({
   }}, '.cards');
 //
 // Устанавливаем валидацию полей форм
-//
-formEditValidate.enableValidation();
-formAddValidate.enableValidation();
-formEditAvatarValidate.enableValidation();
 //
